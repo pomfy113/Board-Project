@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Draggable - Snap to element or grid</title>
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <style>
+  .draggable { position: relative; left: 0; top: 0; width: 100px; height: 100px; font-size: .9em; border: 1px solid red}
+/* Ask Mitchell about the business with making sure it's exact*/
+
+  </style>
+
+  <script>
+  $( function() {
+    $( "#draggable5" ).draggable({ grid: [100, 100]});
+  } );
+  </script>
+</head>
+<body>
+<div class="board">
+    <div id="draggable5" class="draggable ui-widget-content">
+      <p>I snap to a 100 x 100 grid</p>
+    </div>
+</div>
+
+
+</body>
+</html>
