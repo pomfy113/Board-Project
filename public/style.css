@@ -1,6 +1,12 @@
-/*div.board{
+div.board{
     display: block;
-    height: 100%;
+    height: 501px;
+    width: 501px;
     background-size: 100px 100px;
     background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(100px) translateY(100px);
+}
+
+/*.board{
+    display: grid;
 }*/
