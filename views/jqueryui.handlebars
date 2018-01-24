@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- Rotatable -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.css">
+  <script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
+
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <style>
+  .draggable {width: 100px; height: 100px; font-size: .9em; border: 1px solid red}
+/* Ask Mitchell about the business with making sure it's exact*/
+
+  </style>
+
+  <script>
+  $( function() {
+    // $(".board").css({
+    //     transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(100px) translateY(100px)"
+    // })
+    $(".board").resizable({
+      grid: 100
+    });
+
+
+    $( "#draggable5" ).draggable({
+        grid: [50, 50],
+        containment: ".board"
+    });
+
+//     $("#draggable5").draggable({
+//         appendTo: 'body',
+//         helper: 'clone',
+//         drag: function () {
+//             $(".ui-draggable-dragging").css({
+//                 transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg)"
+//             });
+//         }
+// });
+
+  } );
+  </script>
+</head>
+<body>
+<div class="board ui-widget-content">
+    <div id="draggable5" class="draggable ui-widget-content">
+      <p>I snap to a 100 x 100 grid</p>
+    </div>
+
+</div>
+
+
+</body>
+</html>

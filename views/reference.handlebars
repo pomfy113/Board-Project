@@ -1,12 +1,6 @@
 <!-- Use id's for JavaScript and Class names for CSS styles -->
 
 <!-- Drag and store elements inside container -->
-<!-- To-Do - Precision -->
-<div class="interface tile-1"></div>
-<div class="interface tile-2"></div>
-<div class="interface tile-3"></div>
-<div class="interface tile-4"></div>
-
 <div id="container" class="container">
   <!-- click this to create new elements -->
   <div id="well" class="well"></div>
@@ -15,14 +9,13 @@
 
 <style>
   /* This parent for all  */
+
   .container {
     width: 500px;
     height: 500px;
     border: 1px solid #000;
     /* Make this relative for absolute positioning children */
     position: relative;
-    background-size: 100px 80px;
-    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
   }
 
   .well {
@@ -44,14 +37,6 @@
     /* border: 1px solid #000; */
     z-index: 999;
     background-color: rgba(100, 0, 0, 0.5);
-  }
-
-  .interface{
-    width: 100px;
-    height: 80px;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-
   }
 
   .tile-1 {
@@ -108,13 +93,6 @@
     selected = null
   }
 
-  container.onmousedown = function(e) {
-      if ($(e.target).is(".tile")){
-          const draggable = new Draggable(e.target, e.pageX, e.pageY)
-          selected = draggable
-      };
-  }
-
   // Makes an Alien DOM element
   function makeTile() {
     // Create a new div element
@@ -132,9 +110,6 @@
   function getElement(id) {
     return document.getElementById(id)
   }
-
-  const CONTAINER_X = getElement("container").getBoundingClientRect()['x']
-  const CONTAINER_Y = getElement("container").getBoundingClientRect()['y']
 
   const TILE_WIDTH = 100
   const TILE_HEIGHT = 50
@@ -158,15 +133,14 @@
 
   // Drag - moves the element to x and y
   Draggable.prototype.drag = function(x, y) {
-    this.x = x - CONTAINER_X
-    this.y = y - CONTAINER_Y
+    this.x = x
+    this.y = y
     this.translate()
   }
 
   // Snap - rounds the position to the nearest 32px increment
   Draggable.prototype.snap = function() {
     // Convert screen coords to isometric grid units
-
     const gridX = Math.round(0.5 * ( this.x / TILE_WIDTH_HALF + this.y / TILE_HEIGHT_HALF))
     const gridY = Math.round(0.5 * (-this.x / TILE_WIDTH_HALF + this.y / TILE_HEIGHT_HALF))
 

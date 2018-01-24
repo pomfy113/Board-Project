@@ -6,8 +6,17 @@ const app = express();
 
 app.use(express.static('public'));
 
+
 app.get('/', (req, res) => {
     res.render("home");
+});
+
+app.get('/reference', (req, res) => {
+    res.render("reference");
+});
+
+app.get('/test', (req, res) => {
+    res.render("jqueryui");
 });
 
 // View Engine - Handlebars
