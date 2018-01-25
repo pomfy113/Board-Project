@@ -25,29 +25,37 @@
     });
 
 
-    $( "#draggable5" ).draggable({
-        grid: [50, 50],
-        containment: ".board"
+    // $( "#draggable5" ).draggable({
+    //     grid: [50, 50],
+    //     containment: ".board"
+    // });
+
+    $("#draggable5").draggable({
+        appendTo: '.board',
+        helper: 'clone',
+        grid: [100,100],
+        // drag: function () {
+        //     $(".ui-draggable-dragging").css({
+        //         transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(-100px) translateY(-100px)"
+        //     });
+        // },
+        stop: function(event, ui) {
+            $(ui.helper).clone(true).removeClass('ui-draggable-dragging').addClass('dragclone').appendTo('.board');
+        }
     });
 
-//     $("#draggable5").draggable({
-//         appendTo: 'body',
-//         helper: 'clone',
-//         drag: function () {
-//             $(".ui-draggable-dragging").css({
-//                 transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg)"
-//             });
-//         }
-// });
+    $('.dragclone').draggable({
+        grid: [50, 50]
+    })
 
   } );
   </script>
 </head>
 <body>
 <div class="board ui-widget-content">
-    <div id="draggable5" class="draggable ui-widget-content">
+    <canvas id="draggable5" class="draggable ui-widget-content">
       <p>I snap to a 100 x 100 grid</p>
-    </div>
+  </canvas>
 
 </div>
 
