@@ -1,5 +1,7 @@
-<div class="container">
-  <div id="cubetest" draggable="true" ondragstart="drag(event)" class="cube cube-1">
+<!-- CHECK LATER - Polyfill Draggable -->
+
+<div id="cubecontainer">
+  <div id="cube-1" draggable="true" ondragstart="drag(event)" class="cube cube-1">
     <div class="face"></div>
     <div class="face"></div>
     <div class="face"></div>
@@ -9,6 +11,10 @@
   </div>
 </div>
 
+<def>
+
+<button id="cubegen">Generate a thing</button>
+
 <button id="generate">Generate Grid</button>
 Rows: <input id="row"></input>
 Columns: <input id="column"></input>
@@ -17,13 +23,17 @@ Columns: <input id="column"></input>
 </div>
 
 <script>
+function getElement(id) {
+  return document.getElementById(id)
+}
 // ==============
 // ==== Grid ====
 // ==============
 let lastClicked;
 let generate = document.getElementById("generate")
 let grid;
-const container = getElement("container")
+const cubecont = getElement("cubecontainer")
+const gridcont = getElement("container")
 
 generate.onmousedown = function(e){
     let rows = document.getElementById('row').value
@@ -42,9 +52,7 @@ generate.onmousedown = function(e){
         if (lastClicked) lastClicked.className='';
         lastClicked = el;
     });
-
-    container.appendChild(grid);
-
+    gridcont.appendChild(grid);
 }
 
 function clickableGrid(rows, cols, callback ){
@@ -68,26 +76,6 @@ function clickableGrid(rows, cols, callback ){
 // ==============
 // ==== Drag ====
 // ==============
-// let cubetest = document.getElementById('cubetest')
-//
-// cubetest.onmousedown = function(e) {
-//     console.log("Hello?")
-//   const tile = makeTile()
-//   const draggable = new Draggable(tile, e.pageX, e.pageY)
-//   selected = draggable
-// }
-//
-// function makeTile() {
-//   // Create a new div element
-//   const el = document.createElement('div')
-//   el.classList.add('player')
-//   container.appendChild(el)
-//   return el
-// }
-//
-function getElement(id) {
-  return document.getElementById(id)
-}
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -101,6 +89,31 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
+}
+// ===============
+// == Generator ==
+// ===============
+let generator = getElement("cubegen")
+let cubeNum = 0
+
+generator.onmousedown = function(e) {
+    const model = document.createElement('div')
+    model.id = "cube-" + cubeNum
+    cubeNum +=  1
+    model.classList.add('cube')
+    model.setAttribute("draggable", "true")
+    model.setAttribute("ondragstart", "drag(event)")
+
+    cubeNum += 1;
+
+    for (let i=0; i<6; ++i){
+        let face = document.createElement('div')
+        face.classList.add('face')
+        model.appendChild(face)
+    }
+    // append the element to the DOM
+    container.appendChild(model)
+
 }
 
 </script>
