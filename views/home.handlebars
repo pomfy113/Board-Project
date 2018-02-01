@@ -16,16 +16,48 @@
 <button id="cubegen">Generate a thing</button>
 
 <button id="generate">Generate Grid</button>
-Rows: <input id="row"></input>
-Columns: <input id="column"></input>
+<button id="rotate-ccw">Counterclockwise</button>
+<button id="rotate-cw">Clockwise</button>
+
+Rows: <input id="row">
+Columns: <input id="column">
+Height: <input id="height">
+
 <div id="container" ondrop="drop(event)" ondragover="allowDrop(event)">
 
 </div>
 
 <script>
+// Just a shortcut
 function getElement(id) {
   return document.getElementById(id)
 }
+// ==============
+// === Rotate ===
+// ==============
+
+const cntClockwise = getElement("rotate-ccw")
+const clockwise = getElement("rotate-cw")
+let tf = -45
+let defaultTF = "rotateX(60deg) rotateY(0deg) rotateZ("
+
+cntClockwise.onmousedown = function(e){
+    if(grid){
+        console.log(grid)
+        tf = tf - 90
+        grid.style.transform = defaultTF + tf +"deg)";
+    }
+}
+
+clockwise.onmousedown = function(e){
+    if(grid){
+        console.log(grid)
+        tf = tf + 90
+        grid.style.transform = defaultTF + tf +"deg)";
+    }
+}
+
+
 // ==============
 // ==== Grid ====
 // ==============
@@ -36,9 +68,11 @@ const cubecont = getElement("cubecontainer")
 const gridcont = getElement("container")
 
 generate.onmousedown = function(e){
+    let height = document.getElementById('height').value
     let rows = document.getElementById('row').value
     let cols = document.getElementById('column').value
-
+    tf = -45;
+    
     if (grid){
         grid.remove()
     }
@@ -59,6 +93,10 @@ function clickableGrid(rows, cols, callback ){
     let i = 0;
     let grid = document.createElement('table');
     grid.className = 'grid';
+    grid.style.width = (50 * cols) + "px";
+    grid.style.left = (11 * cols) + "px";
+    grid.style.top = 300+(-3 * cols) + "px";
+
     for (let r=0; r<rows; ++r){
         let tr = grid.appendChild(document.createElement('tr'));
         for (var c=0;c<cols;++c){
