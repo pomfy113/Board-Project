@@ -27,7 +27,6 @@
 
 .grid {
     position: absolute;
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
     transform-style: preserve-3d;
     border-collapse: collapse;
     transition: 500ms;

@@ -28,88 +28,151 @@ Height: <input id="height">
 </div>
 
 <script>
-// Just a shortcut
+// ==============
+// === Helper ===
+// ==============
+
+// Just a shortcut for get element ID
 function getElement(id) {
   return document.getElementById(id)
 }
+
+// Make strings neater for formatting strings
+String.prototype.format = function() {
+  string = this;
+  for (num in arguments) {
+    string = string.replace("{" + num + "}", arguments[num])
+  }
+  return string
+}
+
+
 // ==============
 // === Rotate ===
 // ==============
+// Rotate it by 90 degrees per button press
+// The starting position is -45 degrees, with the 0,0 being at the top left
 
 const cntClockwise = getElement("rotate-ccw")
 const clockwise = getElement("rotate-cw")
 let tf = -45
-let defaultTF = "rotateX(60deg) rotateY(0deg) rotateZ("
 
-cntClockwise.onmousedown = function(e){
-    if(grid){
-        console.log(grid)
+let postGenHeight;
+
+cntClockwise.onclick = function(e){
+    if(gridArray){
         tf = tf - 90
-        grid.style.transform = defaultTF + tf +"deg)";
+        rotateGrid(tf, height)
     }
 }
 
-clockwise.onmousedown = function(e){
-    if(grid){
-        console.log(grid)
+clockwise.onclick = function(e){
+    if(gridArray){
         tf = tf + 90
-        grid.style.transform = defaultTF + tf +"deg)";
+        rotateGrid(tf, height)
     }
 }
 
+// Let's not repeat ourselves
+function rotateGrid(tf, height){
+    for(let lvl=0; lvl<height;lvl++){
+        let currentGrid = getElement("grid-"+lvl)
+        currentGrid.style.transform =
+            "rotateX(60deg) rotateY(0deg) rotateZ({0}deg) translateZ({1}px)".format(tf, (lvl*75))
+    }
+}
 
 // ==============
 // ==== Grid ====
 // ==============
-let lastClicked;
-let generate = document.getElementById("generate")
-let grid;
+const generate = getElement("generate")
 const cubecont = getElement("cubecontainer")
 const gridcont = getElement("container")
 
-generate.onmousedown = function(e){
-    let height = document.getElementById('height').value
-    let rows = document.getElementById('row').value
-    let cols = document.getElementById('column').value
-    tf = -45;
-    
-    if (grid){
-        grid.remove()
-    }
-    grid = clickableGrid(rows, cols, function(el,row,col,i){
-        console.log("You clicked on element:",el);
-        console.log("You clicked on row:",row);
-        console.log("You clicked on col:",col);
-        console.log("You clicked on item #:",i);
+// Last button clicked
+let lastClicked;
+// Array of grids
+let gridArray;
+// For later use
+let height, rows, cols;
 
-        el.className='clicked';
-        if (lastClicked) lastClicked.className='';
-        lastClicked = el;
-    });
-    gridcont.appendChild(grid);
+generate.onclick = function(e){
+    // Get the info when we actually click
+    height = document.getElementById('height').value
+    rows = document.getElementById('row').value
+    cols = document.getElementById('column').value
+
+    // If it already exists, let's remove them
+    if (gridArray){
+        gridArray.forEach((grid) => {
+            grid.remove()
+        })
+        // Reset rotation
+        tf = -45;
+    }
+
+    // This is going to house all of our grids
+    // gridArray = clickableGrid(rows, cols, height, function(el,row,col,i){
+    //     console.log("You clicked on element:",el);
+    //     console.log("You clicked on row:",row);
+    //     console.log("You clicked on col:",col);
+    //     console.log("You clicked on item #:",i);
+    //
+    //     el.className='clicked';
+    //     if (lastClicked) lastClicked.className='';
+    //     lastClicked = el;
+    // });
+
+    gridArray = clickableGrid(rows, cols, height);
+
+
+    // Add grid to the container
+    gridArray.forEach((grid) => {
+        gridcont.appendChild(grid);
+    })
+
+    // gridcont.setAttribute("height", height)
+
 }
 
-function clickableGrid(rows, cols, callback ){
+function clickableGrid(rows, cols, height, callback ){
     let i = 0;
-    let grid = document.createElement('table');
-    grid.className = 'grid';
-    grid.style.width = (50 * cols) + "px";
-    grid.style.left = (11 * cols) + "px";
-    grid.style.top = 300+(-3 * cols) + "px";
+    let allGrids = [];
+    let defaultGrid = "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateZ("
 
-    for (let r=0; r<rows; ++r){
-        let tr = grid.appendChild(document.createElement('tr'));
-        for (var c=0;c<cols;++c){
-            var cell = tr.appendChild(document.createElement('td'));
-            // cell.innerHTML = ++i;
-            cell.addEventListener('click',(function(el, r, c, i){
-                return function(){
-                    callback(el, r, c, i);
-                }
-            })(cell, r, c, i),false);
+    for(let h=0; h<height; ++h){
+        let grid = document.createElement('table');
+        grid.className = 'grid';
+        grid.style.width = (50 * cols) + "px";
+        grid.style.left = (11 * cols) + "px";
+        grid.style.top = 300+(-3 * cols) + "px";
+        grid.style.transform = defaultGrid + (h * 75) + "px)";
+        // Need this for going through all grid and doing proper transforms
+        grid.id = "grid-" + h
+
+        // Creating tables w/ proper rows and columns
+        for (let r=0; r<rows; ++r){
+            let tr = grid.appendChild(document.createElement('tr'));
+            for (var c=0;c<cols;++c){
+                var cell = tr.appendChild(document.createElement('td'));
+                // Read into immediately invocables
+                cell.addEventListener('click', (function(el, r, c, i){
+                    return function(){
+                        cellData(el, r, c, i);}
+                    })(cell, r, c, i));
+            }
         }
+        allGrids.push(grid)
     }
-    return grid;
+    return allGrids;
+}
+
+// Extra data on cell; also adds "clicked" to highlight lass clicked
+// I'll do something with clicked later
+function cellData(element, row, col){
+        element.className='clicked';
+        if (lastClicked) lastClicked.className='';
+        lastClicked = element;
 }
 // ==============
 // ==== Drag ====
