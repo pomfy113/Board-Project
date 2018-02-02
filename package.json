@@ -13,6 +13,6 @@
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.11",
     "mongoose": "^5.0.0",
-    "nodemon": "^1.14.11"
+    "nodemon": "^1.14.12"
   }
 }

@@ -1,35 +1,25 @@
-/*.board{
-    display: block;
-    height: 501px;
-    width: 501px;
-    background-size: 100px 100px;
-    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(100px) translateY(100px);
-}*/
-
-
-/*
-.dragclone{
-    transform: translateX(-100px) translateY(-100px);
-}*/
-
-/*.ui-draggable-dragging{
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
-}*/
-
-/*.board{
-    display: grid;
-}*/
-
 #container{
 
 }
 
 .grid {
+    --rotX: 60deg;
+    --rotY: 0deg;
+    --rotZ: -45deg;
+    --test: 50%;
+    --trnZ: 0px;
+
     position: absolute;
     transform-style: preserve-3d;
     border-collapse: collapse;
     transition: 500ms;
+    left: 50%;
+    top: 50%;
+    transform:
+        rotateX(var(--rotX))
+        rotateY(var(--rotY))
+        rotateZ(var(--rotZ))
+        translateZ(var(--trnZ));
 }
 
 .grid td {
