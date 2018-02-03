@@ -1,3 +1,12 @@
+// DEFAULT rotations in degrees
+let rotX = 70;
+let rotY = 0;
+let rotZ = -45;
+let zoom = 1;
+// DEFAULT zoom
+// Each height in layers
+let layerHeight = 100;
+
 // ==============
 // === Helper ===
 // ==============
@@ -6,15 +15,73 @@
 function getElement(id) {
   return document.getElementById(id)
 }
+// MAY need this in the future, possibly
+// // Make strings neater for formatting strings
+// String.prototype.format = function() {
+//   string = this;
+//   for (num in arguments) {
+//     string = string.replace("{" + num + "}", arguments[num])
+//   }
+//   return string
+// }
 
-// Make strings neater for formatting strings
-String.prototype.format = function() {
-  string = this;
-  for (num in arguments) {
-    string = string.replace("{" + num + "}", arguments[num])
-  }
-  return string
+// ==============
+// ==== Move ====
+// ==============
+const moveUp = getElement("mv-up");
+const moveDown = getElement("mv-down");
+const moveLeft = getElement("mv-left");
+const moveRight = getElement("mv-right");
+let currentX = 0;
+let currentY = 0;
+
+// Move vertically
+moveUp.onclick = function(e){
+    if(gridArray){
+        currentY -= 25;
+        moveY((currentY + "px"));
+    }
+};
+
+moveDown.onclick = function(e){
+    if(gridArray){
+        currentY += 25;
+        moveY((currentY + "px"));
+    }
+};
+
+// Move horizontally
+moveLeft.onclick = function(e){
+    if(gridArray){
+        currentX -= 25;
+        moveX((currentX + "px"));
+    }
+};
+
+moveRight.onclick = function(e){
+    if(gridArray){
+        currentX += 25;
+        moveX((currentX + "px"));
+    }
+};
+
+
+// Let's not repeat ourselves
+function moveX(x){
+    for(let lvl=0; lvl<height;lvl++){
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--x", x);
+    }
 }
+
+function moveY(y){
+    for(let lvl=0; lvl<height;lvl++){
+        console.log(y)
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--y", y);
+    }
+}
+
 
 
 // ==============
@@ -72,38 +139,30 @@ generate.onclick = function(e){
     rows = document.getElementById('row').value
     cols = document.getElementById('column').value
 
-    // If it already exists, let's remove them
+    // Remove and reset stats
     if (gridArray){
         gridArray.forEach((grid) => {
             grid.remove()
         })
         // Reset rotation
         tf = -45;
+        currentX = 0;
+        currentY = 0;
     }
 
     gridArray = clickableGrid(rows, cols, height);
 
-
     // Add grid to the container
     gridArray.forEach((grid) => {
         gridcont.appendChild(grid);
-    })
+    });
 
 
 }
 
-// I MIGHT need this for later
-let rotX = 60;
-let rotY = 0;
-let rotZ = -45;
-// Set this in pixels
-let layerHeight = 100;
-
 function clickableGrid(rows, cols, height, callback ){
     let i = 0;
     let allGrids = [];
-    // let defaultGrid = "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateZ("
-
 
     for(let h=0; h<height; ++h){
         let grid = document.createElement('table');
@@ -111,12 +170,15 @@ function clickableGrid(rows, cols, height, callback ){
         grid.style.width = (50 * cols) + "px";
 
         // grid.style.transform = defaultGrid + (h * 75) + "px)";
-        grid.style.setProperty('--rotX', rotX + "deg")
-        grid.style.setProperty('--rotY', rotY + "deg")
-        grid.style.setProperty('--rotZ', rotZ + "deg")
-        grid.style.setProperty('--trnZ', layerHeight * (h) + "px")
+        grid.style.setProperty('--x', "0px");
+        grid.style.setProperty('--y', "0px");
 
-        console.log(rotZ + (90*h) + "deg")
+        grid.style.setProperty('--rotX', rotX + "deg");
+        grid.style.setProperty('--rotY', rotY + "deg");
+        grid.style.setProperty('--rotZ', rotZ + "deg");
+        grid.style.setProperty('--trnZ', layerHeight * (h) + "px");
+
+        console.log(rotZ + (90*h) + "deg");
         // Need this for going through all grid and doing proper transforms
         grid.id = "grid-" + h
 
@@ -178,11 +240,10 @@ generator.onmousedown = function(e) {
     cubeNum += 1;
 
     for (let i=0; i<6; ++i){
-        let face = document.createElement('div')
-        face.classList.add('face')
-        model.appendChild(face)
+        let face = document.createElement('div');
+        face.classList.add('face');
+        model.appendChild(face);
     }
     // append the element to the DOM
-    container.appendChild(model)
-
+    container.appendChild(model);
 }

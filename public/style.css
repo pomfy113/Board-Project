@@ -1,21 +1,23 @@
 #container{
-
+    --zoom: 1;
+    height: 60%;
+    overflow: hidden;
+    border: 1px solid black;
+    transform: scale(var(--zoom));
 }
 
 .grid {
-    --rotX: 60deg;
-    --rotY: 0deg;
-    --rotZ: -45deg;
-    --test: 50%;
-    --trnZ: 0px;
-
+    /* These get set on creation, but defaults are: 70deg, 0deg, -45deg, X Y Z*/
+    z-index: -1;
     position: absolute;
     transform-style: preserve-3d;
     border-collapse: collapse;
     transition: 500ms;
     left: 50%;
-    top: 50%;
+    top: 75%;
     transform:
+        translateX(calc(-50% + var(--x)))
+        translateY(calc(-50% + var(--y)))
         rotateX(var(--rotX))
         rotateY(var(--rotY))
         rotateZ(var(--rotZ))
