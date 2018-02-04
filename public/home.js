@@ -15,6 +15,7 @@ let layerHeight = 100;
 function getElement(id) {
   return document.getElementById(id)
 }
+
 // MAY need this in the future, possibly
 // // Make strings neater for formatting strings
 // String.prototype.format = function() {
@@ -76,7 +77,6 @@ function moveX(x){
 
 function moveY(y){
     for(let lvl=0; lvl<height;lvl++){
-        console.log(y)
         let currentGrid = getElement("grid-"+lvl);
         currentGrid.style.setProperty("--y", y);
     }
@@ -92,32 +92,64 @@ function moveY(y){
 
 const cntClockwise = getElement("rotate-ccw")
 const clockwise = getElement("rotate-cw")
-let tf = -45
 
 let postGenHeight;
 
 cntClockwise.onclick = function(e){
     if(gridArray){
-        tf = tf - 90
-        rotateGrid(tf, height)
+        rotZ = rotZ - 90;
+        rotateGridHor(rotZ, height);
     }
-}
+};
 
 clockwise.onclick = function(e){
     if(gridArray){
-        tf = tf + 90
-        rotateGrid(tf, height)
+        rotZ = rotZ + 90;
+        rotateGridHor(rotZ, height);
     }
-}
+};
 
 // Let's not repeat ourselves
-function rotateGrid(tf, height){
+function rotateGridHor(newRotZ, height){
     for(let lvl=0; lvl<height;lvl++){
-        let currentGrid = getElement("grid-"+lvl)
-        currentGrid.style.setProperty("--rotZ", tf+"deg")
-
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--rotZ", newRotZ+"deg");
     }
 }
+
+// ==============
+// === Rotate ===
+// ==============
+
+const zoomIn = getElement("zoom-in");
+const zoomOut = getElement("zoom-out");
+
+zoomIn.onclick = function(e){
+    if(gridArray){
+        zoom += 0.2;
+        zoomChange(zoom);
+    }
+};
+
+zoomOut.onclick = function(e){
+    if(gridArray){
+        // Can't go past that
+        if(zoom > 0){
+            zoom -= 0.2;
+        }
+        zoomChange(zoom);
+    }
+};
+
+function zoomChange(zoom){
+    if(zoom <= 0){}
+    for(let lvl=0; lvl<height;lvl++){
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--zoom", zoom);
+    }
+}
+
+
 
 // ==============
 // ==== Grid ====
@@ -145,9 +177,13 @@ generate.onclick = function(e){
             grid.remove()
         })
         // Reset rotation
-        tf = -45;
         currentX = 0;
         currentY = 0;
+        // Reset rotations
+        rotX = 70;
+        rotY = 0;
+        rotZ = -45;
+        zoom = 1;
     }
 
     gridArray = clickableGrid(rows, cols, height);
