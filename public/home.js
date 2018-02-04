@@ -6,6 +6,7 @@ let zoom = 1;
 // DEFAULT zoom
 // Each height in layers
 let layerHeight = 100;
+let gridArray;
 
 // ==============
 // === Helper ===
@@ -26,6 +27,26 @@ function getElement(id) {
 //   return string
 // }
 
+function resetGrid(){
+    if (gridArray){
+        gridArray.forEach((grid) => {
+            grid.remove();
+        });
+    }
+
+    // Reset position
+    currentX = 0;
+    currentY = 0;
+    // Reset rotations
+    rotX = 70;
+    rotY = 0;
+    rotZ = -45;
+    zoom = 1;
+
+    layerHeight = 100;
+
+}
+
 // ==============
 // ==== Move ====
 // ==============
@@ -36,36 +57,29 @@ const moveRight = getElement("mv-right");
 let currentX = 0;
 let currentY = 0;
 
-// Move vertically
-moveUp.onclick = function(e){
-    if(gridArray){
+if(gridArray !== 'undefined'){
+    // Move vertically
+    moveUp.onclick = function(e){
         currentY -= 25;
         moveY((currentY + "px"));
-    }
-};
+    };
 
-moveDown.onclick = function(e){
-    if(gridArray){
+    moveDown.onclick = function(e){
         currentY += 25;
         moveY((currentY + "px"));
-    }
-};
+    };
 
-// Move horizontally
-moveLeft.onclick = function(e){
-    if(gridArray){
+    // Move horizontally
+    moveLeft.onclick = function(e){
         currentX -= 25;
         moveX((currentX + "px"));
-    }
-};
+    };
 
-moveRight.onclick = function(e){
-    if(gridArray){
+    moveRight.onclick = function(e){
         currentX += 25;
         moveX((currentX + "px"));
-    }
-};
-
+    };
+}
 
 // Let's not repeat ourselves
 function moveX(x){
@@ -90,24 +104,33 @@ function moveY(y){
 // Rotate it by 90 degrees per button press
 // The starting position is -45 degrees, with the 0,0 being at the top left
 
-const cntClockwise = getElement("rotate-ccw")
-const clockwise = getElement("rotate-cw")
+const cntClockwise = getElement("rotate-ccw");
+const clockwise = getElement("rotate-cw");
+const rtUp = getElement("rotate-up");
+const rtDown = getElement("rotate-down");
 
 let postGenHeight;
-
-cntClockwise.onclick = function(e){
-    if(gridArray){
+if(gridArray !== 'undefined'){
+    cntClockwise.onclick = function(e){
         rotZ = rotZ - 90;
         rotateGridHor(rotZ, height);
-    }
-};
+    };
 
-clockwise.onclick = function(e){
-    if(gridArray){
+    clockwise.onclick = function(e){
         rotZ = rotZ + 90;
         rotateGridHor(rotZ, height);
-    }
-};
+    };
+
+    rtUp.onclick = function(e){
+        rotX = rotX + 5;
+        rotateGridVert(rotX, height);
+    };
+
+    rtDown.onclick = function(e){
+        rotX = rotX - 5;
+        rotateGridVert(rotX, height);
+    };
+}
 
 // Let's not repeat ourselves
 function rotateGridHor(newRotZ, height){
@@ -117,29 +140,63 @@ function rotateGridHor(newRotZ, height){
     }
 }
 
+function rotateGridVert(newRotX, height){
+    for(let lvl=0; lvl<height;lvl++){
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--rotX", newRotX+"deg");
+    }
+}
 // ==============
-// === Rotate ===
+// === Spread ===
+// ==============
+const spread = getElement("spread");
+const contract = getElement("contract");
+
+if(gridArray !== 'undefined'){
+    spread.onclick = function(e){
+        layerHeight += 20;
+        adjustSpread(layerHeight, height);
+    };
+
+    contract.onclick = function(e){
+        if(layerHeight > 0){
+            layerHeight -= 20;
+        }
+        adjustSpread(layerHeight, height);
+    };
+}
+
+function adjustSpread(layerHeight, height){
+    for(let lvl=0; lvl<height;lvl++){
+        let currentGrid = getElement("grid-"+lvl);
+        currentGrid.style.setProperty("--trnZ", (layerHeight*lvl)+"px");
+    }
+}
+
+
+
+
+// ==============
+// ==== Zoom ====
 // ==============
 
 const zoomIn = getElement("zoom-in");
 const zoomOut = getElement("zoom-out");
 
-zoomIn.onclick = function(e){
-    if(gridArray){
+if(gridArray !== 'undefined'){
+    zoomIn.onclick = function(e){
         zoom += 0.2;
         zoomChange(zoom);
-    }
-};
+    };
 
-zoomOut.onclick = function(e){
-    if(gridArray){
-        // Can't go past that
+    zoomOut.onclick = function(e){
+        // Don't want to go past 0 scale
         if(zoom > 0){
             zoom -= 0.2;
         }
         zoomChange(zoom);
-    }
-};
+    };
+}
 
 function zoomChange(zoom){
     if(zoom <= 0){}
@@ -149,42 +206,28 @@ function zoomChange(zoom){
     }
 }
 
-
-
 // ==============
 // ==== Grid ====
 // ==============
-const generate = getElement("generate")
-const cubecont = getElement("cubecontainer")
-const gridcont = getElement("container")
+const generate = getElement("generate");
+const cubecont = getElement("cubecontainer");
+const gridcont = getElement("container");
 
 // Last button clicked
 let lastClicked;
 // Array of grids
-let gridArray;
+
 // For later use
 let height, rows, cols;
 
 generate.onclick = function(e){
     // Get the info when we actually click
-    height = document.getElementById('height').value
-    rows = document.getElementById('row').value
-    cols = document.getElementById('column').value
+    height = document.getElementById('height').value;
+    rows = document.getElementById('row').value;
+    cols = document.getElementById('column').value;
 
     // Remove and reset stats
-    if (gridArray){
-        gridArray.forEach((grid) => {
-            grid.remove()
-        })
-        // Reset rotation
-        currentX = 0;
-        currentY = 0;
-        // Reset rotations
-        rotX = 70;
-        rotY = 0;
-        rotZ = -45;
-        zoom = 1;
-    }
+    resetGrid();
 
     gridArray = clickableGrid(rows, cols, height);
 
@@ -192,9 +235,7 @@ generate.onclick = function(e){
     gridArray.forEach((grid) => {
         gridcont.appendChild(grid);
     });
-
-
-}
+};
 
 function clickableGrid(rows, cols, height, callback ){
     let i = 0;
@@ -214,33 +255,35 @@ function clickableGrid(rows, cols, height, callback ){
         grid.style.setProperty('--rotZ', rotZ + "deg");
         grid.style.setProperty('--trnZ', layerHeight * (h) + "px");
 
-        console.log(rotZ + (90*h) + "deg");
         // Need this for going through all grid and doing proper transforms
-        grid.id = "grid-" + h
+        grid.id = "grid-" + h;
 
         // Creating tables w/ proper rows and columns
         for (let r=0; r<rows; ++r){
             let tr = grid.appendChild(document.createElement('tr'));
-            for (var c=0;c<cols;++c){
-                var cell = tr.appendChild(document.createElement('td'));
+            for (let c=0;c<cols;++c){
+                let cell = tr.appendChild(document.createElement('td'));
                 // Read into immediately invocables
-                cell.addEventListener('click', (function(el, r, c, i){
-                    return function(){
-                        cellData(el, r, c, i);}
-                    })(cell, r, c, i));
+                cell.addEventListener('click', cellListener(cell, r, c, h));
             }
         }
-        allGrids.push(grid)
+        allGrids.push(grid);
     }
     return allGrids;
 }
 
+function cellListener(element, row, column, height){
+    return function(){
+        cellData(element, row, column, height);
+    };
+}
+
 // Extra data on cell; also adds "clicked" to highlight lass clicked
 // I'll do something with clicked later
-function cellData(element, row, col){
-        element.className='clicked';
+function cellData(el, row, col){
+        el.className='clicked';
         if (lastClicked) lastClicked.className='';
-        lastClicked = element;
+        lastClicked = el;
 }
 // ==============
 // ==== Drag ====
@@ -257,7 +300,6 @@ function drop(ev) {
     ev.preventDefault();
 
     let data = ev.dataTransfer.getData("text");
-    console.log(data)
 
     // Let's make sure we're hitting a proper cell
     if(ev.target.nodeName === 'TD'){
