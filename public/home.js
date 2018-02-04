@@ -245,7 +245,6 @@ function cellData(element, row, col){
 // ==============
 // ==== Drag ====
 // ==============
-
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -256,9 +255,29 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+
+    let data = ev.dataTransfer.getData("text");
+    console.log(data)
+
+    // Let's make sure we're hitting a proper cell
+    if(ev.target.nodeName === 'TD'){
+        if(data === "cube-generator"){
+                let dataCopy = document.getElementById(data).cloneNode(true)
+                dataCopy.id = "cube" + cubeNum;
+                cubeNum += 1;
+                ev.target.appendChild(dataCopy);
+        }
+        // I might wanna be careful to be more specific on what I drop around
+        else{
+            let currentCube = document.getElementById(data)
+            ev.target.appendChild(currentCube)
+        }
+    }
+
+
 }
+
+
 // ===============
 // == Generator ==
 // ===============
