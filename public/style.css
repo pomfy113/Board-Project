@@ -1,4 +1,5 @@
 #container{
+    position: relative;
     --zoom: 1;
     height: 60%;
     overflow: hidden;
@@ -12,11 +13,11 @@
     transform-style: preserve-3d;
     border-collapse: collapse;
     transition: 500ms;
-    left: 50%;
-    top: 75%;
+    left: calc(50% + var(--x));
+    top: calc(50% + var(--y));
     transform:
-        translateX(calc(-50% + var(--x)))
-        translateY(calc(-50% + var(--y)))
+        translateX(-50%)
+        translateY(-25%)
         scale(var(--zoom))
         rotateX(var(--rotX))
         rotateY(var(--rotY))
@@ -38,9 +39,8 @@
     background-color:yellow;
     font-weight:bold; color:red;
 }
-/**/
 
-    /*CUUUUBE*/
+/*CUUUUBE*/
 #cubecontainer {
   width: 100px;
   height: 100px;
