@@ -14,7 +14,7 @@ let gridArray;
 
 // Just a shortcut for get element ID
 function getElement(id) {
-  return document.getElementById(id)
+  return document.getElementById(id);
 }
 
 // MAY need this in the future, possibly
@@ -32,6 +32,9 @@ function resetGrid(){
         gridArray.forEach((grid) => {
             grid.remove();
         });
+        while(gridvisibility.hasChildNodes()){
+            gridvisibility.removeChild(gridvisibility.firstChild);
+        }
     }
 
     // Reset position
@@ -42,7 +45,7 @@ function resetGrid(){
     rotY = 0;
     rotZ = -45;
     zoom = 1;
-
+    //
     layerHeight = 100;
 
 }
@@ -60,23 +63,23 @@ let currentY = 0;
 if(gridArray !== 'undefined'){
     // Move vertically
     moveUp.onclick = function(e){
-        currentY -= 25;
+        currentY -= 40;
         moveY((currentY + "px"));
     };
 
     moveDown.onclick = function(e){
-        currentY += 25;
+        currentY += 40;
         moveY((currentY + "px"));
     };
 
     // Move horizontally
     moveLeft.onclick = function(e){
-        currentX -= 25;
+        currentX -= 40;
         moveX((currentX + "px"));
     };
 
     moveRight.onclick = function(e){
-        currentX += 25;
+        currentX += 40;
         moveX((currentX + "px"));
     };
 }
@@ -112,22 +115,22 @@ const rtDown = getElement("rotate-down");
 let postGenHeight;
 if(gridArray !== 'undefined'){
     cntClockwise.onclick = function(e){
-        rotZ = rotZ - 90;
+        rotZ -= 90;
         rotateGridHor(rotZ, height);
     };
 
     clockwise.onclick = function(e){
-        rotZ = rotZ + 90;
+        rotZ += 90;
         rotateGridHor(rotZ, height);
     };
 
     rtUp.onclick = function(e){
-        rotX = rotX + 5;
+        rotX += 5;
         rotateGridVert(rotX, height);
     };
 
     rtDown.onclick = function(e){
-        rotX = rotX - 5;
+        rotX -= 5;
         rotateGridVert(rotX, height);
     };
 }
@@ -154,15 +157,16 @@ const contract = getElement("contract");
 
 if(gridArray !== 'undefined'){
     spread.onclick = function(e){
-        layerHeight += 20;
+        layerHeight += 50;
         adjustSpread(layerHeight, height);
     };
 
     contract.onclick = function(e){
-        if(layerHeight > 0){
-            layerHeight -= 20;
+        // Negative goes into flips
+        if(layerHeight - 50 > 0){
+            layerHeight -= 50;
+            adjustSpread(layerHeight, height);
         }
-        adjustSpread(layerHeight, height);
     };
 }
 
@@ -173,9 +177,6 @@ function adjustSpread(layerHeight, height){
     }
 }
 
-
-
-
 // ==============
 // ==== Zoom ====
 // ==============
@@ -185,15 +186,12 @@ const zoomOut = getElement("zoom-out");
 
 if(gridArray !== 'undefined'){
     zoomIn.onclick = function(e){
-        zoom += 0.2;
+        zoom *= 1.2;
         zoomChange(zoom);
     };
 
     zoomOut.onclick = function(e){
-        // Don't want to go past 0 scale
-        if(zoom > 0){
-            zoom -= 0.2;
-        }
+        zoom /= 1.2;
         zoomChange(zoom);
     };
 }
@@ -212,11 +210,10 @@ function zoomChange(zoom){
 const generate = getElement("generate");
 const cubecont = getElement("cubecontainer");
 const gridcont = getElement("container");
+const gridvisibility = getElement("grid-visibility");
 
 // Last button clicked
 let lastClicked;
-// Array of grids
-
 // For later use
 let height, rows, cols;
 
@@ -234,6 +231,7 @@ generate.onclick = function(e){
     // Add grid to the container
     gridArray.forEach((grid) => {
         gridcont.appendChild(grid);
+        createButton(grid);
     });
 };
 
@@ -254,6 +252,8 @@ function clickableGrid(rows, cols, height, callback ){
         grid.style.setProperty('--rotY', rotY + "deg");
         grid.style.setProperty('--rotZ', rotZ + "deg");
         grid.style.setProperty('--trnZ', layerHeight * (h) + "px");
+        grid.setAttribute('level', h);
+
 
         // Need this for going through all grid and doing proper transforms
         grid.id = "grid-" + h;
@@ -285,6 +285,30 @@ function cellData(el, row, col){
         if (lastClicked) lastClicked.className='';
         lastClicked = el;
 }
+
+// For hiding
+function createButton(grid){
+    let newbutton = gridvisibility.appendChild(document.createElement('button'));
+    let level = grid.getAttribute("level")
+    newbutton.id = "vis-" + level;
+    newbutton.innerHTML = "Level " + level;
+    newbutton.onclick = function(){ gridtoggle(grid, newbutton); } ;
+}
+
+function gridtoggle(target, button){
+    if(target.style.display === "none"){
+        target.style.display = "block";
+        button.style.color = "black";
+        button.style.backgroundColor = "white";
+
+    }
+    else{
+        target.style.display = "none";
+        button.style.color = "grey";
+        button.style.backgroundColor = "lightgrey";
+    }
+}
+
 // ==============
 // ==== Drag ====
 // ==============
@@ -304,35 +328,34 @@ function drop(ev) {
     // Let's make sure we're hitting a proper cell
     if(ev.target.nodeName === 'TD'){
         if(data === "cube-generator"){
-                let dataCopy = document.getElementById(data).cloneNode(true)
+                let dataCopy = document.getElementById(data).cloneNode(true);
                 dataCopy.id = "cube" + cubeNum;
                 cubeNum += 1;
                 ev.target.appendChild(dataCopy);
         }
         // I might wanna be careful to be more specific on what I drop around
         else{
-            let currentCube = document.getElementById(data)
-            ev.target.appendChild(currentCube)
+            let currentCube = document.getElementById(data);
+            ev.target.appendChild(currentCube);
         }
     }
 
 
 }
 
-
 // ===============
 // == Generator ==
 // ===============
-let generator = getElement("cubegen")
-let cubeNum = 0
+let generator = getElement("cubegen");
+let cubeNum = 0;
 
 generator.onmousedown = function(e) {
-    const model = document.createElement('div')
-    model.id = "cube-" + cubeNum
-    cubeNum +=  1
-    model.classList.add('cube')
-    model.setAttribute("draggable", "true")
-    model.setAttribute("ondragstart", "drag(event)")
+    const model = document.createElement('div');
+    model.id = "cube-" + cubeNum;
+    cubeNum +=  1;
+    model.classList.add('cube');
+    model.setAttribute("draggable", "true");
+    model.setAttribute("ondragstart", "drag(event)");
 
     cubeNum += 1;
 
@@ -343,4 +366,4 @@ generator.onmousedown = function(e) {
     }
     // append the element to the DOM
     container.appendChild(model);
-}
+};

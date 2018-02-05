@@ -18,14 +18,14 @@ Vanilla Javascript and CSS! No libraries.
      * [X] Able to create extra instances
      * [X] Able to drag it from grid cell to another cell
      * [ ] Zoom
-3. [ ] Visual effects/Adjusting
+3. [X] Visual effects/Adjusting
      * [X] Able to rotate grid
      * [X] Able to create different height (true 3D)
-     * [ ] Object generator rather than creating THEN dragging **(IN PROGRESS)**
-     * [ ] Basic adjusting of where the grid is (center it) **(IN PROGRESS)**
-     * [ ] Need a cleaner way of doing this
-4. [ ] Basic clean-up
-     * [ ] Improve and clean-up basic javascript **(IN PROGRESS)**
+     * [X] Object generator rather than creating THEN dragging
+     * [X] Basic adjusting of where the grid is (center it)
+     * [ ] Need a cleaner way of doing this **(IN PROGRESS)**
+4. [X] Basic clean-up
+     * [X] Improve and clean-up basic javascript
 5. [ ] Tokens
      * [ ] Create tokens
      * [ ] Able to upload images for tokens
