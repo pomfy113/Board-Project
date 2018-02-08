@@ -15,45 +15,10 @@
 
   </style>
 
-  <script>
-  $( function() {
-    // $(".board").css({
-    //     transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(100px) translateY(100px)"
-    // })
-    $(".board").resizable({
-      grid: 100
-    });
-
-
-    // $( "#draggable5" ).draggable({
-    //     grid: [50, 50],
-    //     containment: ".board"
-    // });
-
-    $("#draggable5").draggable({
-        appendTo: '.board',
-        helper: 'clone',
-        grid: [100,100],
-        // drag: function () {
-        //     $(".ui-draggable-dragging").css({
-        //         transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(-100px) translateY(-100px)"
-        //     });
-        // },
-        stop: function(event, ui) {
-            $(ui.helper).clone(true).removeClass('ui-draggable-dragging').addClass('dragclone').appendTo('.board');
-        }
-    });
-
-    $('.dragclone').draggable({
-        grid: [50, 50]
-    })
-
-  } );
-  </script>
 </head>
 <body>
-<div class="board ui-widget-content">
-    <canvas id="draggable5" class="draggable ui-widget-content">
+<div class="board ui-widget-content" style="height:100%;">
+    <canvas class="generator draggable ui-widget-content">
       <p>I snap to a 100 x 100 grid</p>
   </canvas>
 
@@ -62,3 +27,60 @@
 
 </body>
 </html>
+
+<script>
+$( function() {
+  // $(".board").css({
+  //     transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(100px) translateY(100px)"
+  // })
+  // $(".board").resizable({
+  //   grid: 100
+  // });
+
+
+  // $( "#draggable5" ).draggable({
+  //     grid: [50, 50],
+  //     containment: ".board"
+  // });
+
+  // $("#draggable5").draggable({
+  //     appendTo: '.board',
+  //     helper: 'clone',
+  //     grid: [100,100],
+  //     // drag: function () {
+  //     //     $(".ui-draggable-dragging").css({
+  //     //         transform: "rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateX(-100px) translateY(-100px)"
+  //     //     });
+  //     // },
+  //     stop: function(event, ui) {
+  //         $(ui.helper).clone().addClass('dragclone').removeClass('ui-draggable-dragging').appendTo('.board');
+  //     }
+  // });
+  //
+  // $(".dragclone").draggable({
+  //     grid: [50, 50]
+  // })
+
+// Generator is the generator object
+  $(".generator").draggable({
+      grid: [ 100, 100 ],
+      helper:'clone'
+  });
+
+// Board is where I want them to be
+  $(".board").droppable({
+      accept: ".generator",
+      drop: function(event,ui){
+          // Make the clone; stop it from being generator
+          let new_signature = $(ui.helper).clone().removeClass('generator').addClass('clone');
+          // Make new object a draggable
+          new_signature.draggable({
+              grid: [ 100, 100 ]
+          });
+          // Add to board
+          $(this).append(new_signature);
+      }
+  });
+
+} );
+</script>

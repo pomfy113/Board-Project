@@ -30,8 +30,11 @@ function getElement(id) {
 function resetGrid(){
     if (gridArray){
         gridArray.forEach((grid) => {
+            // turn into destroy
             grid.remove();
         });
+        gridArray = []
+
         while(gridvisibility.hasChildNodes()){
             gridvisibility.removeChild(gridvisibility.firstChild);
         }
@@ -242,6 +245,8 @@ function clickableGrid(rows, cols, height, callback ){
     for(let h=0; h<height; ++h){
         let grid = document.createElement('table');
         grid.className = 'grid';
+        grid.id = "grid-" + h;
+
         grid.style.width = (50 * cols) + "px";
 
         // grid.style.transform = defaultGrid + (h * 75) + "px)";
@@ -252,16 +257,16 @@ function clickableGrid(rows, cols, height, callback ){
         grid.style.setProperty('--rotY', rotY + "deg");
         grid.style.setProperty('--rotZ', rotZ + "deg");
         grid.style.setProperty('--trnZ', layerHeight * (h) + "px");
+
         grid.setAttribute('level', h);
 
 
         // Need this for going through all grid and doing proper transforms
-        grid.id = "grid-" + h;
 
         // Creating tables w/ proper rows and columns
-        for (let r=0; r<rows; ++r){
+        for (let r = 0; r < rows; ++r){
             let tr = grid.appendChild(document.createElement('tr'));
-            for (let c=0;c<cols;++c){
+            for (let c = 0; c < cols; ++c){
                 let cell = tr.appendChild(document.createElement('td'));
                 // Read into immediately invocables
                 cell.addEventListener('click', cellListener(cell, r, c, h));
@@ -282,14 +287,15 @@ function cellListener(element, row, column, height){
 // I'll do something with clicked later
 function cellData(el, row, col){
         el.className='clicked';
+
         if (lastClicked) lastClicked.className='';
         lastClicked = el;
 }
 
 // For hiding
 function createButton(grid){
-    let newbutton = gridvisibility.appendChild(document.createElement('button'));
-    let level = grid.getAttribute("level")
+    let newbutton = gridvisibility.insertBefore(document.createElement('button'), gridvisibility.childNodes[0]);
+    let level = grid.getAttribute("level");
     newbutton.id = "vis-" + level;
     newbutton.innerHTML = "Level " + level;
     newbutton.onclick = function(){ gridtoggle(grid, newbutton); } ;
@@ -317,26 +323,28 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData("token", ev.target.id);
 }
 
 function drop(ev) {
     ev.preventDefault();
 
-    let data = ev.dataTransfer.getData("text");
+    let data = ev.dataTransfer.getData("token");
+    let dataObj = document.getElementById(data);
+    console.log(dataObj.classList)
 
-    // Let's make sure we're hitting a proper cell
     if(ev.target.nodeName === 'TD'){
-        if(data === "cube-generator"){
-                let dataCopy = document.getElementById(data).cloneNode(true);
+        if(dataObj.classList.contains("generator")){
+                console.log("???")
+                dataCopy = dataObj.cloneNode(true);
                 dataCopy.id = "cube" + cubeNum;
+                dataCopy.classList.remove("generator")
                 cubeNum += 1;
                 ev.target.appendChild(dataCopy);
         }
         // I might wanna be careful to be more specific on what I drop around
         else{
-            let currentCube = document.getElementById(data);
-            ev.target.appendChild(currentCube);
+            ev.target.appendChild(dataObj);
         }
     }
 
@@ -346,6 +354,7 @@ function drop(ev) {
 // ===============
 // == Generator ==
 // ===============
+// Redundant
 let generator = getElement("cubegen");
 let cubeNum = 0;
 

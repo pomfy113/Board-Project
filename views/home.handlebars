@@ -1,10 +1,15 @@
-<!-- CHECK LATER - Polyfill Draggable -->
+button<!-- CHECK LATER - Polyfill Draggable -->
 <div id="cubecontainer">
-  <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="cube cube-1">
+  <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="generator cube">
     <div class="face"></div>
     <div class="face"></div>
     <div class="face"></div>
     <div class="face"></div>
+    <div class="face"></div>
+    <div class="face"></div>
+  </div>
+
+  <div id="basic-token" draggable="true" ondragstart="drag(event)" class="generator token">
     <div class="face"></div>
     <div class="face"></div>
   </div>
@@ -14,16 +19,11 @@
 
 <button id="generate">Generate Grid</button>
 <!-- </br> -->
-<!-- <button id="rotate-ccw">Counterclockwise</button>
-<button id="rotate-cw">Clockwise</button>
-<button id="rotate-up">Rotate Up</button>
-<button id="rotate-down">Rotate Down</button> -->
+<!-- <div id="rotate-ccw">Counterclockwise</div>
+<div id="rotate-cw">Clockwise</div>
+<div id="rotate-up">Rotate Up</div>
+<div id="rotate-down">Rotate Down</div> -->
 </br>
-<button id="zoom-in">Zoom-in</button>
-<button id="zoom-out">Zoom-out</button>
-<button id="spread">Spread</button>
-<button id="contract">Contract</button>
-
 
 
 Rows: <input id="row">
@@ -33,26 +33,41 @@ Height: <input id="height">
 <div id="controls">
     <div id="left-ctrl" class="sidebar">
         <div class="control">
-        <div id="grid-visibility"></div>
+            <div id="grid-visibility"></div>
         </div>
     </div>
     <div id="right-ctrl" class="sidebar">
         <div class="control">
-            <button id="mv-up" class="direction">Up</button>
-            <div>
-                <button id="mv-left">Left</button>
-                <button id="mv-right">Right</button>
+            <div class="row">
+                <div class="ctrl-btn" id="mv-up">&#x2191;</div>
             </div>
-            <button id="mv-down">Down</button>
+
+            <div class="row">
+                <div class="ctrl-btn" id="mv-left">&#x2190;</div>
+                <div class="ctrl-btn" id="mv-right">&#x2192;</div>
+            </div>
+            <div class="ctrl-btn" id="mv-down">&#x2193;</div>
             </br>
         </div>
         <div class="control">
-            <button id="rotate-up">Up</button>
-            <div>
-                <button id="rotate-cw">CW</button>
-                <button id="rotate-ccw">CCW</button>
+            <div class="ctrl-btn" id="rotate-up">Up</div>
+            <div class="row">
+                <div class="ctrl-btn" id="rotate-cw">&#x21BB;</div>
+                <div class="ctrl-btn" id="rotate-ccw">&#x21BA;</div>
             </div>
-            <button id="rotate-down">Down</button>
+            <div class="ctrl-btn" id="rotate-down">Down</div>
+        </div>
+        <div class="control">
+            <div class="row nogap">
+                <div class="ctrl-btn" id="zoom-in">Zoom-in</div>
+                <div class="ctrl-btn" id="zoom-out">Zoom-out</div>
+            </div>
+            <div class="row nogap">
+                <div class="ctrl-btn" id="spread">Spread</div>
+                <div class="ctrl-btn" id="contract">Contract</div>
+            </div>
+
+
         </div>
 
     </div>
