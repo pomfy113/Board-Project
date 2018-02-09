@@ -277,20 +277,6 @@ function clickableGrid(rows, cols, height, callback ){
     return allGrids;
 }
 
-function cellListener(element, row, column, height){
-    return function(){
-        cellData(element, row, column, height);
-    };
-}
-
-// Extra data on cell; also adds "clicked" to highlight lass clicked
-// I'll do something with clicked later
-function cellData(el, row, col){
-        el.className='clicked';
-
-        if (lastClicked) lastClicked.className='';
-        lastClicked = el;
-}
 
 // For hiding
 function createButton(grid){
