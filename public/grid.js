@@ -14,14 +14,18 @@
         this.setProperties = setProperties;     // For setting individual grid properties later
         this.gridSetup = gridSetup;             // Setup for grid
         this.createGrid = createGrid;           // Actually creating the grid when finished
+        this.manip = manipulate;                // Manipulate
 
         // Variables + setup of containers
         this.gridArray = [];                    // All of the grids; can be single if height is only 1
         this.container = container;             // Where are we putting the grid?
         this.visibility = visibility;           // Where to put button visibilities
+
+
         // And so we begin
-        console.log(this.visibility)
         this.create();
+        // Manipulations
+
 
     }
 
@@ -30,6 +34,8 @@
             this.gridSetup(this.rows, this.cols, this.height);
             this.createGrid();
         }
+
+
 
 
 // =========================================
@@ -157,6 +163,27 @@
                         button.style.backgroundColor = "lightgrey";
                     }
                 }
+// =========================================
+// Manipulations
+// =========================================
+    function manipulate(type, direction){
+        switch(type){
+            case "rotate":
+                console.log("You're rotating");
+                break;
+            case "translate":
+                translate(direction, this.gridArray)
+                break;
+            case "zoom":
+                console.log("Zoom");
+                break;
+        }
+
+    }
+
+    function translate(direction, object){
+        // object.forEach((grid ))
+    }
 
 // =========================================
 // Init
@@ -168,13 +195,22 @@
 
 })();
 
-let container = document.getElementById('container');
-let visibility = document.getElementById('grid-visibility');
-let test = Grid(10, 10, 3, container, visibility);
+function getElement(id) {
+  return document.getElementById(id);
+}
 
-let generate = document.getElementById('generate');
+let container = getElement('container');
+let visibility = getElement('grid-visibility');
+let test = Grid(10, 10, 3, container, visibility);
+let left = getElement('mv-left')
+let generate = getElement('generate');
 
 
 generate.onclick = function(e){
     test.reset(5, 5, 5);
+};
+
+left.onclick = function(e){
+    console.log("I clicked left!");
+    test.manip("translate", "left");
 };
