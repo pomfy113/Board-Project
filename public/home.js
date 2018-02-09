@@ -27,10 +27,10 @@ function getElement(id) {
 //   return string
 // }
 
+
 function resetGrid(){
     if (gridArray){
         gridArray.forEach((grid) => {
-            // turn into destroy
             grid.remove();
         });
         gridArray = []
@@ -66,23 +66,23 @@ let currentY = 0;
 if(gridArray !== 'undefined'){
     // Move vertically
     moveUp.onclick = function(e){
-        currentY -= 40;
+        currentY += 40;
         moveY((currentY + "px"));
     };
 
     moveDown.onclick = function(e){
-        currentY += 40;
+        currentY -= 40;
         moveY((currentY + "px"));
     };
 
     // Move horizontally
     moveLeft.onclick = function(e){
-        currentX -= 40;
+        currentX += 40;
         moveX((currentX + "px"));
     };
 
     moveRight.onclick = function(e){
-        currentX += 40;
+        currentX -= 40;
         moveX((currentX + "px"));
     };
 }

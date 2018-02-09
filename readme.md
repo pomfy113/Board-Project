@@ -35,3 +35,5 @@ Vanilla Javascript and CSS! No libraries.
            * I don't even know where this begins
      * [ ] Create users/rooms?
 7. ???
+
+Currently reworking javascript
