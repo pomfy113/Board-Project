@@ -102,8 +102,6 @@ function moveY(y){
     }
 }
 
-
-
 // ==============
 // === Rotate ===
 // ==============
@@ -155,8 +153,8 @@ function rotateGridVert(newRotX, height){
 // ==============
 // === Spread ===
 // ==============
-const spread = getElement("spread");
-const contract = getElement("contract");
+const spread = getElement("spread-in");
+const contract = getElement("spread-out");
 
 if(gridArray !== 'undefined'){
     spread.onclick = function(e){
