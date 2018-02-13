@@ -16,12 +16,12 @@ generate.onclick = function(e){
     height = getElement('height').value;
     rows = getElement('row').value;
     cols = getElement('column').value;
-    // if(grid){
-    grid = Grid(height, rows, cols, container, visibility);
-    // }
-    // else{
-        // grid.reset(height, rows, cols);
-
+    if(!grid){
+        grid = Grid(rows, cols, height, container, visibility);
+    }
+    else{
+        grid.resetAll(rows, cols, height);
+    }
 
 };
 
@@ -36,11 +36,16 @@ hide.onclick = function(e){
     }
 };
 
+// All manipulation functions
 document.querySelectorAll('.ctrl-btn').forEach((button) =>{
     let action = button.id.split('-');
     button.onclick = function(e){
-        grid.manipulate(action[0], action[1]);
+        if(grid){
+            grid.manipulate(action[0], action[1]);
+        }
     };
+
+
 });
 
 // ==============
@@ -76,3 +81,56 @@ function drop(ev) {
 
 
 }
+
+// ==============
+// =Key controls=
+// ==============
+document.body.onkeydown = function(e){
+    console.log(e)
+    if(grid){
+        switch(e.key){
+            // Translates
+            case "ArrowLeft":
+                grid.manipulate("translate", "left");
+                break;
+            case "ArrowRight":
+                grid.manipulate("translate", "right");
+                break;
+            case "ArrowUp":
+                grid.manipulate("translate", "up");
+                break;
+            case "ArrowDown":
+                grid.manipulate("translate", "down");
+                break;
+            // Rotates
+            case "w":
+                grid.manipulate("rotate", "up");
+                break;
+            case "s":
+                grid.manipulate("rotate", "down");
+                break;
+            case "a":
+                grid.manipulate("rotate", "cw");
+                break;
+            case "d":
+                grid.manipulate("rotate", "ccw");
+                break;
+            // Spread
+            case "q":
+                grid.manipulate("spread", "out");
+                break;
+            case "e":
+                grid.manipulate("spread", "in");
+                break;
+            // Zoom
+            case "z":
+                grid.manipulate("zoom", "in");
+                break;
+            case "c":
+                grid.manipulate("zoom", "out");
+                break;
+
+        }
+    }
+
+};

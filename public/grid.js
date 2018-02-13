@@ -153,7 +153,7 @@
             case "rotate":
                 this.rotateChange(direction);
                 break;
-            case "mv":
+            case "translate":
                 this.translateChange(direction);
                 break;
             case "zoom":
