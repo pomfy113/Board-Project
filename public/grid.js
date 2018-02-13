@@ -276,25 +276,3 @@
     };
 
 })();
-
-// function getElement(id) {
-//   return document.getElementById(id);
-// }
-//
-// let container = getElement('container');
-// let visibility = getElement('grid-visibility');
-// let test = Grid(10, 10, 3, container, visibility);
-// let left = getElement('mv-left');
-// let generate = getElement('generate');
-//
-//
-// generate.onclick = function(e){
-//     test.reset(5, 5, 5);
-// };
-//
-// document.querySelectorAll('.ctrl-btn').forEach((button) =>{
-//     let action = button.id.split('-');
-//     button.onclick = function(e){
-//         test.manipulate(action[0], action[1]);
-//     };
-// });

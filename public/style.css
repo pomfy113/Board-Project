@@ -1,13 +1,156 @@
+body{
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-areas:    "top top top top top top"
+                            "cont cont cont cont cont cont"
+                            "cont cont cont cont cont cont"
+                            "cont cont cont cont cont cont"
+                            "cont cont cont cont cont cont"
+                            "cont cont cont cont cont cont";
+}
+
+#top{
+    grid-area: top;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:    "gene cube cube cube cube cube"
+}
+
+/* The stuff that generates*/
+#generate-container{
+    grid-area: gene;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+    #generate-container input{
+        width: 50%;
+    }
+
+    #generate-container div{
+        display: flex;
+        justify-content: space-between;
+        margin: 2px;
+    }
+
+    #generate-container button{
+        margin: 10px;
+        width: 50%;
+        height: 25%;
+        background-color: white;
+        border-radius: 25px;
+        align-self: center;
+    }
+/* ======================= */
+/* Contains all the generator stuff*/
+/* ======================= */
+
+#cubecontainer {
+    grid-area: cube;
+
+  /*width: 50%;*/
+  /*height: 50px;
+  padding: 50px;*/
+
+  /*border: 1px solid #000;*/
+  /*position: relative;*/
+  /*perspective: 400px;*/
+  display: inline-flex;
+  flex-flow: row;
+  /*align-items: center;*/
+  /*justify-content: space-between;*/
+}
+
+
+/*CUUUUBE*/
+
+.face {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+/*#cubecontainer>div{
+    display: inline;
+    position: static;
+}*/
+
+.generator{
+    margin: 5px 50px;
+    /*align-self: center;*/
+}
+
+
+#container .token{
+    position: absolute;
+    transform-style: preserve-3d;
+    transform: translateZ(25px) translateY(-25px);
+
+}
+
+  /* Bottom */
+  .cube .face:nth-child(1) {
+    transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -25px);
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+
+  .cube .face:nth-child(2) {
+    transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, -25px);
+    background-color: rgba(0, 255, 0, 0.5);
+  }
+
+  .cube .face:nth-child(3) {
+    transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, -25px);
+    background-color: rgba(0, 0, 255, 0.5);
+  }
+
+  /* Top */
+ .cube .face:nth-child(4) {
+    transform: rotate3d(0, 1, 0, 180deg) translate3d(0, 0, -25px);
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+
+  .cube .face:nth-child(5) {
+    transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, -25px);
+    background-color: rgba(0, 255, 0, 0.5);
+  }
+
+  .cube .face:nth-child(6) {
+    transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, -25px);
+    background-color: rgba(0, 0, 255, 0.5);
+  }
+
+
+    /* Base */
+    .token .face:nth-child(1) {
+      transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -25px);
+      background-color: rgba(255, 0, 0, 0.5);
+      border-radius: 50%;
+    }
+    /* Backright */
+    .token .face:nth-child(2) {
+      transform: rotateX(-90deg) rotateY(var(--rotZ ));
+      background-image: url('token.jpg');
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      transition: 500ms;
+    }
+/* ======================= */
+
+
+
 #container{
+    grid-area: cont;
     position: relative;
-    display: flex;
+    /*display: flex;*/
     flex-direction: row;
     --zoom: 1;
-    height: 60%;
+    /*height: 60%;*/
     overflow: hidden;
     border: 1px solid black;
 }
-
 
 .grid {
     /* These get set on creation, but defaults are: 70deg, 0deg, -45deg, X Y Z*/
@@ -37,12 +180,12 @@
     box-sizing: content-box;
 }
 
-
 .grid td.clicked {
     background-color: yellow;
     font-weight: bold;
     color: red;
 }
+
 /* Controls */
 #controls{
     position: absolute;
@@ -92,92 +235,4 @@
 
     .row.nogap .ctrl-btn{
         margin: 0px 2px;
-    }
-
-
-/*CUUUUBE*/
-
-
-
-
-.face {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-}
-
-#cubecontainer {
-  width: 100px;
-  height: 100px;
-  padding: 50px;
-  /*border: 1px solid #000;*/
-  /*position: relative;*/
-  /*perspective: 400px;*/
-  display: inline-flex;
-  justify-content: space-between;
-}
-
-#cubecontainer>div{
-    display: inline;
-    position: static;
-}
-
-.cube {
-  position: absolute;
-  transform-style: preserve-3d;
-  transform: translateZ(25px) translateY(-25px);
-}
-
-.token{
-    position: absolute;
-    transform-style: preserve-3d;
-    transform: translateZ(25px) translateY(-25px);
-}
-
-  /* Bottom */
-  .cube .face:nth-child(1) {
-    transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -25px);
-    background-color: rgba(255, 0, 0, 0.5);
-  }
-
-  .cube .face:nth-child(2) {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(0, 0, -25px);
-    background-color: rgba(0, 255, 0, 0.5);
-  }
-
-  .cube .face:nth-child(3) {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, -25px);
-    background-color: rgba(0, 0, 255, 0.5);
-  }
-
-  /* Top */
- .cube .face:nth-child(4) {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(0, 0, -25px);
-    background-color: rgba(255, 0, 0, 0.5);
-  }
-
-  .cube .face:nth-child(5) {
-    transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, -25px);
-    background-color: rgba(0, 255, 0, 0.5);
-  }
-
-  .cube .face:nth-child(6) {
-    transform: rotate3d(0, 1, 0, -90deg) translate3d(0, 0, -25px);
-    background-color: rgba(0, 0, 255, 0.5);
-  }
-
-
-    /* Base */
-    .token .face:nth-child(1) {
-      transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -25px);
-      background-color: rgba(255, 0, 0, 0.5);
-      border-radius: 50%;
-    }
-    /* Backright */
-    .token .face:nth-child(2) {
-      transform: rotateX(-90deg) rotateY(var(--rotZ ));
-      background-image: url('token.jpg');
-      background-size: auto 100%;
-      background-repeat: no-repeat;
-      transition: 500ms;
     }

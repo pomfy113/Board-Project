@@ -1,24 +1,29 @@
 <!-- CHECK LATER - Polyfill Draggable -->
-<div id="cubecontainer">
-  <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="generator cube">
-    <div class="face"></div>
-    <div class="face"></div>
-    <div class="face"></div>
-    <div class="face"></div>
-    <div class="face"></div>
-    <div class="face"></div>
-  </div>
+<div id="top">
+    <div id="generate-container">
+        <div>Rows: <input id="row"></div>
+        <div>Columns: <input id="column"></div>
+        <div>Height: <input id="height"></div>
+        <button id="generate">Generate Grid</button>
 
-  <div id="basic-token" draggable="true" ondragstart="drag(event)" class="generator token">
-    <div class="face"></div>
-    <div class="face"></div>
-  </div>
+    </div>
+    <div id="cubecontainer">
+      <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="generator cube">
+        <div class="face"></div>
+        <div class="face"></div>
+        <div class="face"></div>
+        <div class="face"></div>
+        <div class="face"></div>
+        <div class="face"></div>
+      </div>
+
+      <div id="basic-token" draggable="true" ondragstart="drag(event)" class="generator token">
+        <div class="face"></div>
+        <div class="face"></div>
+      </div>
+    </div>
 </div>
 <br>
-
-<button id="cubegen">Generate a thing</button>
-
-<button id="generate">Generate Grid</button>
 <!-- </br> -->
 <!-- <div id="rotate-ccw">Counterclockwise</div>
 <div id="rotate-cw">Clockwise</div>
@@ -27,9 +32,6 @@
 </br>
 
 
-Rows: <input id="row">
-Columns: <input id="column">
-Height: <input id="height">
 <div id="container" ondrop="drop(event)" ondragover="allowDrop(event)">
 <div id="controls">
     <div id="left-ctrl" class="sidebar">
