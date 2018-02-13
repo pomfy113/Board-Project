@@ -1,53 +1,64 @@
 body{
+    --default:  "top top top top top top"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont";
+
+    --hidden:   "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont"
+                "cont cont cont cont cont cont";
+
     display: grid;
     height: 100%;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
-    grid-template-areas:    "top top top top top top"
-                            "cont cont cont cont cont cont"
-                            "cont cont cont cont cont cont"
-                            "cont cont cont cont cont cont"
-                            "cont cont cont cont cont cont"
-                            "cont cont cont cont cont cont";
+    grid-template-areas: var(--default);
 }
 
-#top{
+#generators{
     grid-area: top;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-areas:    "gene cube cube cube cube cube"
+    grid-template-areas:    "gene cube cube cube cube cube";
 }
 
-/* The stuff that generates*/
-#generate-container{
+/* ============================================== */
+/* Contains all the grid generation items         */
+/* ============================================== */
+#generate-grid{
     grid-area: gene;
     display: inline-flex;
     flex-direction: column;
 }
 
-    #generate-container input{
+    #generate-grid input{
         width: 50%;
     }
 
-    #generate-container div{
+    #generate-grid div{
         display: flex;
         justify-content: space-between;
         margin: 2px;
     }
 
-    #generate-container button{
+    #generate-grid button{
         margin: 10px;
-        width: 50%;
+        width: 75%;
         height: 25%;
         background-color: white;
         border-radius: 25px;
         align-self: center;
     }
-/* ======================= */
-/* Contains all the generator stuff*/
-/* ======================= */
+/* ============================================== */
+/* Contains all the cube generator items          */
+/* ============================================== */
 
-#cubecontainer {
+#generate-tokens {
     grid-area: cube;
 
   /*width: 50%;*/

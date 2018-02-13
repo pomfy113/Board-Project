@@ -3,16 +3,19 @@ function getElement(id) {
   return document.getElementById(id);
 }
 let grid;
+// Used for grid
 let container = getElement('container');
 let visibility = getElement('grid-visibility');
-// let grid = Grid(10, 10, 3, container, visibility);
 let generate = getElement('generate');
+// For hiding
+let hide = getElement('hide');
+let generators = getElement('generators');
 
 
 generate.onclick = function(e){
-    height = document.getElementById('height').value;
-    rows = document.getElementById('row').value;
-    cols = document.getElementById('column').value;
+    height = getElement('height').value;
+    rows = getElement('row').value;
+    cols = getElement('column').value;
     // if(grid){
     grid = Grid(height, rows, cols, container, visibility);
     // }
@@ -20,6 +23,17 @@ generate.onclick = function(e){
         // grid.reset(height, rows, cols);
 
 
+};
+
+hide.onclick = function(e){
+    if(generators.style.display === "none"){
+        generators.style.display = "grid";
+        document.body.style.gridTemplateAreas = "var(--default)";
+    }
+    else{
+        generators.style.display = "none";
+        document.body.style.gridTemplateAreas = "var(--hidden)";
+    }
 };
 
 document.querySelectorAll('.ctrl-btn').forEach((button) =>{
