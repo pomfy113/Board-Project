@@ -131,7 +131,8 @@
             };
 
                 // CREATE GRID HELPER HELPER - allows toggling of grid
-                Grid.prototype.gridtoggle = function(target, button){
+                // Does not need to be part of prototype?
+                let gridtoggle = function(target, button){
                     if(target.style.display === "none"){
                         target.style.display = "block";
                         button.style.color = "black";
@@ -150,20 +151,23 @@
     Grid.prototype.manipulate = function(type, direction){
         switch(type){
             case "rotate":
-                this.rotate(direction);
+                this.rotateChange(direction);
                 break;
             case "mv":
-                this.translate(direction);
+                this.translateChange(direction);
                 break;
             case "zoom":
-                this.zoom(direction);
+                this.zoomChange(direction);
+                break;
+            case "spread":
+                this.spreadChange(direction);
                 break;
             default:
                 console.log("Error");
         }
     };
 
-    Grid.prototype.translate = function(direction){
+    Grid.prototype.translateChange = function(direction){
         switch(direction){
             case "left":
                 this.currentX -= 30;
@@ -190,7 +194,7 @@
         }
     };
 
-    Grid.prototype.rotate = function(direction){
+    Grid.prototype.rotateChange = function(direction){
         switch(direction){
             case "cw":
                 this.rotZ -= 90;
@@ -218,8 +222,7 @@
     };
 
 
-    Grid.prototype.zoom = function(direction){
-        console.log(direction)
+    Grid.prototype.zoomChange = function(direction){
         switch(direction){
             case "in":
                 this.zoom *= 1.2;
@@ -240,35 +243,58 @@
         }
     };
 
+    Grid.prototype.spreadChange = function(direction){
+        switch(direction){
+            case "in":
+                this.layerHeight += 50;
+                break;
+            case "out":
+                if(this.layerHeight > 0){
+                    this.layerHeight -= 50;
+                }
+                break;
+        }
+        if(direction === "in"){
+            this.gridArray.forEach((grid) => {
+                grid.style.setProperty("--trnZ", (this.layerHeight * grid.getAttribute('level')) + "px");
+            });
+        }
+        else if(direction == "out"){
+            this.gridArray.forEach((grid) => {
+                grid.style.setProperty("--trnZ", (this.layerHeight *grid.getAttribute('level')) + "px");
+            });
+        }
+    };
+
 
 // =========================================
 // Init
 // =========================================
     window.Grid = function(rows, cols, height, container, visibility){
-        grid = new Grid(rows, cols, height, container, visibility);
+        let grid = new Grid(rows, cols, height, container, visibility);
         return grid;
     };
 
 })();
 
-function getElement(id) {
-  return document.getElementById(id);
-}
-
-let container = getElement('container');
-let visibility = getElement('grid-visibility');
-let test = Grid(10, 10, 3, container, visibility);
-let left = getElement('mv-left');
-let generate = getElement('generate');
-
-
-generate.onclick = function(e){
-    test.reset(5, 5, 5);
-};
-
-document.querySelectorAll('.ctrl-btn').forEach((button) =>{
-    let action = button.id.split('-');
-    button.onclick = function(e){
-        test.manipulate(action[0], action[1]);
-    };
-});
+// function getElement(id) {
+//   return document.getElementById(id);
+// }
+//
+// let container = getElement('container');
+// let visibility = getElement('grid-visibility');
+// let test = Grid(10, 10, 3, container, visibility);
+// let left = getElement('mv-left');
+// let generate = getElement('generate');
+//
+//
+// generate.onclick = function(e){
+//     test.reset(5, 5, 5);
+// };
+//
+// document.querySelectorAll('.ctrl-btn').forEach((button) =>{
+//     let action = button.id.split('-');
+//     button.onclick = function(e){
+//         test.manipulate(action[0], action[1]);
+//     };
+// });
