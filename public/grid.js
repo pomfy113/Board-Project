@@ -61,7 +61,7 @@
             this.currentX = 0;
             this.currentY = 0;
             // Reset rotations
-            this.rotX = 70;
+            this.rotX = 75;
             this.rotY = 0;
             this.rotZ = -45;
             this.zoom = 1;

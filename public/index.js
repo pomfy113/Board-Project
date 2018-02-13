@@ -86,7 +86,6 @@ function drop(ev) {
 // =Key controls=
 // ==============
 document.body.onkeydown = function(e){
-    console.log(e)
     if(grid){
         switch(e.key){
             // Translates
