@@ -1,38 +1,30 @@
 <!-- CHECK LATER - Polyfill Draggable -->
-<div id="generators">
-    <div id="generate-grid">
-        <div>Rows: <input id="row"></div>
-        <div>Columns: <input id="column"></div>
-        <div>Height: <input id="height"></div>
-        <button id="generate">Generate Grid</button>
-
-    </div>
-    <div id="generate-tokens">
-      <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="generator cube">
-        <div class="face"></div>
-        <div class="face"></div>
-        <div class="face"></div>
-        <div class="face"></div>
-        <div class="face"></div>
-        <div class="face"></div>
-      </div>
-
-      <div id="basic-token" draggable="true" ondragstart="drag(event)" class="generator token">
-        <div class="face"></div>
-        <div class="face"></div>
-      </div>
-    </div>
-</div>
-<br>
-<!-- </br> -->
-<!-- <div id="rotate-ccw">Counterclockwise</div>
-<div id="rotate-cw">Clockwise</div>
-<div id="rotate-up">Rotate Up</div>
-<div id="rotate-down">Rotate Down</div> -->
-</br>
-
-
 <div id="container" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="generators">
+        <div id="generate-grid">
+            <div>Rows: <input id="row"></div>
+            <div>Columns: <input id="column"></div>
+            <div>Height: <input id="height"></div>
+            <button id="generate">Generate Grid</button>
+
+        </div>
+        <div id="generate-tokens">
+          <div id="cube-generator" draggable="true" ondragstart="drag(event)" class="generator cube">
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+            <div class="face"></div>
+          </div>
+
+          <div id="basic-token" draggable="true" ondragstart="drag(event)" class="generator token">
+            <div class="face"></div>
+            <div class="face"></div>
+          </div>
+
+        </div>
+    </div>
 <div id="controls">
     <div id="left-ctrl" class="sidebar">
         <div class="control">

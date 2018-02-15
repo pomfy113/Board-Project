@@ -28,11 +28,9 @@ generate.onclick = function(e){
 hide.onclick = function(e){
     if(generators.style.display === "none"){
         generators.style.display = "grid";
-        document.body.style.gridTemplateAreas = "var(--default)";
     }
     else{
         generators.style.display = "none";
-        document.body.style.gridTemplateAreas = "var(--hidden)";
     }
 };
 

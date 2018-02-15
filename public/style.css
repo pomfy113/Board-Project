@@ -1,31 +1,22 @@
 body{
-    --default:  "top top top top top top"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont";
-
-    --hidden:   "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont"
-                "cont cont cont cont cont cont";
-
-    display: grid;
-    height: 100%;
+    --genColor: #DEB887;
+    --inputColor: #EDE1D1;
     margin: 0px;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    grid-template-areas: var(--default);
 }
+
+
 
 #generators{
     grid-area: top;
     display: grid;
+    overflow: hidden;     /* Need this for hiding */
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:    "gene cube cube cube cube cube";
+    transition: 750ms;
+    border-bottom: 1px solid black;
+    background-color: var(--genColor);
+    z-index: 999;
+    position: relative;
 }
 
 /* ============================================== */
@@ -36,11 +27,18 @@ body{
     display: inline-flex;
     flex-direction: column;
     padding: 5px;
-    border: 1px solid black;
+    border-right: 1px solid black;
+
 }
 
     #generate-grid input{
         width: 50%;
+        background-color: var(--inputColor);
+        border: 0px;
+    }
+
+    #generate-grid input:focus{
+        outline: none;
     }
 
     #generate-grid div{
@@ -53,9 +51,10 @@ body{
         margin: 10px;
         width: 75%;
         height: 15%;
-        background-color: white;
         border-radius: 25px;
         align-self: center;
+        background-color: var(--inputColor);
+
     }
 /* ============================================== */
 /* Contains all the cube generator items          */
@@ -65,10 +64,10 @@ body{
   grid-area: cube;
   display: inline-flex;
   flex-flow: row;
+  flex-direction: row;
+
 }
 
-
-/*CUUUUBE*/
 
 .face {
   position: absolute;
@@ -78,10 +77,13 @@ body{
 
 .generator{
     margin: 5px 50px;
+    background-color: none;
+    /*align-self: center;*/
 }
 
 
-#container .token{
+
+td .token{
     position: absolute;
     transform-style: preserve-3d;
     transform: translateZ(25px) translateY(-25px);
@@ -141,14 +143,15 @@ body{
 /* ======================= */
 
 #container{
-    grid-area: cont;
     position: relative;
-    /*display: flex;*/
+    height: 100%;
     flex-direction: row;
     --zoom: 1;
-    /*height: 60%;*/
     overflow: hidden;
     border: 1px solid black;
+    margin: 0px;
+    background-color: #e4d2ba;
+
 }
 
 .grid {
