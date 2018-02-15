@@ -135,14 +135,12 @@
                 let gridtoggle = function(target, button){
                     if(target.style.display === "none"){
                         target.style.display = "block";
-                        button.style.color = "black";
-                        button.style.backgroundColor = "white";
+                        button.classList.remove("hidden")
 
                     }
                     else{
                         target.style.display = "none";
-                        button.style.color = "grey";
-                        button.style.backgroundColor = "lightgrey";
+                        button.classList.add("hidden");
                     }
                 };
 // =========================================

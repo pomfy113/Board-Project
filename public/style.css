@@ -1,9 +1,23 @@
 body{
     --genColor: #DEB887;
     --inputColor: #EDE1D1;
+    --gridColor: #f6f0e8;
     margin: 0px;
 }
 
+button{
+    border-radius: 25px;
+    align-self: center;
+    background-color: var(--inputColor);
+
+    color: white;
+    text-shadow: 0 0 1px black;
+    border: 1px solid grey;
+}
+
+button.hidden{
+    background-color: #2a241c;
+}
 
 
 #generators{
@@ -28,6 +42,9 @@ body{
     flex-direction: column;
     padding: 5px;
     border-right: 1px solid black;
+    /* Text*/
+    color: white;
+    text-shadow: 0 0 1px black;
 
 }
 
@@ -37,7 +54,7 @@ body{
         border: 0px;
     }
 
-    #generate-grid input:focus{
+    #generate-grid *:focus{
         outline: none;
     }
 
@@ -51,9 +68,6 @@ body{
         margin: 10px;
         width: 75%;
         height: 15%;
-        border-radius: 25px;
-        align-self: center;
-        background-color: var(--inputColor);
 
     }
 /* ============================================== */
@@ -160,7 +174,8 @@ td .token{
     position: absolute;
     transform-style: preserve-3d;
     border-collapse: collapse;
-    background-color: rgba(250, 250, 250, .9);
+    background-color: var(--gridColor);
+    opacity: 0.9;
     transition: 500ms;
     left: calc(50% + var(--x));
     top: calc(50% + var(--y));
@@ -250,5 +265,7 @@ td .token{
 
 #hint p{
     margin: 0px;
-    color: lightgrey;
+    color: white;
+    text-shadow: 0 0 1px black;
+
 }
