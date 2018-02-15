@@ -15,6 +15,7 @@ body{
 
     display: grid;
     height: 100%;
+    margin: 0px;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-template-areas: var(--default);
@@ -34,6 +35,8 @@ body{
     grid-area: gene;
     display: inline-flex;
     flex-direction: column;
+    padding: 5px;
+    border: 1px solid black;
 }
 
     #generate-grid input{
@@ -49,7 +52,7 @@ body{
     #generate-grid button{
         margin: 10px;
         width: 75%;
-        height: 25%;
+        height: 15%;
         background-color: white;
         border-radius: 25px;
         align-self: center;
@@ -59,19 +62,9 @@ body{
 /* ============================================== */
 
 #generate-tokens {
-    grid-area: cube;
-
-  /*width: 50%;*/
-  /*height: 50px;
-  padding: 50px;*/
-
-  /*border: 1px solid #000;*/
-  /*position: relative;*/
-  /*perspective: 400px;*/
+  grid-area: cube;
   display: inline-flex;
   flex-flow: row;
-  /*align-items: center;*/
-  /*justify-content: space-between;*/
 }
 
 
@@ -83,14 +76,8 @@ body{
   height: 50px;
 }
 
-/*#cubecontainer>div{
-    display: inline;
-    position: static;
-}*/
-
 .generator{
     margin: 5px 50px;
-    /*align-self: center;*/
 }
 
 
@@ -135,8 +122,9 @@ body{
 
 
     /* Base */
-    .token .face:nth-child(1) {
-      transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -25px);
+    /* I only want to show it on the container*/
+    #container .token>.face:nth-child(1) {
+      transform: rotate3d(0, 0, 0, 0) translate3d(0, 0, -24px);
       background-color: rgba(255, 0, 0, 0.5);
       border-radius: 50%;
     }
@@ -148,9 +136,9 @@ body{
       background-repeat: no-repeat;
       transition: 500ms;
     }
+
+
 /* ======================= */
-
-
 
 #container{
     grid-area: cont;
@@ -214,6 +202,7 @@ body{
 
 .sidebar {
     display: flex;
+    margin: 5px;
 }
 
 .control {
@@ -230,7 +219,7 @@ body{
 
     .ctrl-btn {
         --size: 30px;
-        font-size: 10px;
+        font-size: 6px;
         height: var(--size);
         width: var(--size);
         line-height: var(--size);
