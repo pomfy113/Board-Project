@@ -33,8 +33,7 @@ function resetGrid(){
         gridArray.forEach((grid) => {
             grid.remove();
         });
-        gridArray = []
-
+        gridArray = [];
         while(gridvisibility.hasChildNodes()){
             gridvisibility.removeChild(gridvisibility.firstChild);
         }
@@ -315,14 +314,12 @@ function drop(ev) {
 
     let data = ev.dataTransfer.getData("token");
     let dataObj = document.getElementById(data);
-    console.log(dataObj.classList)
 
     if(ev.target.nodeName === 'TD'){
         if(dataObj.classList.contains("generator")){
-                console.log("???")
                 dataCopy = dataObj.cloneNode(true);
                 dataCopy.id = "cube" + cubeNum;
-                dataCopy.classList.remove("generator")
+                dataCopy.classList.remove("generator");
                 cubeNum += 1;
                 ev.target.appendChild(dataCopy);
         }

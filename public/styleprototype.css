@@ -216,6 +216,18 @@ td .token{
 .sidebar {
     display: flex;
     margin: 5px;
+    list-style: none;
+    justify-content: center;
+}
+/* */
+#right-ctrl{
+    z-index: 5;
+    background-color: var(--genColor);
+
+}
+
+#right-ctrl ul{
+    padding: 2px;
 }
 
 .control {
@@ -251,6 +263,13 @@ td .token{
         margin: 0px 2px;
     }
 
+li{
+    position: relative;
+    z-index: 1;
+}
+ul{
+    margin: 5px;
+}
 /* Hints */
 #hint{
     position: absolute;
