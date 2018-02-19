@@ -1,0 +1,170 @@
+<!-- Use id's for JavaScript and Class names for CSS styles -->
+
+<!-- Drag and store elements inside container -->
+<div id="container" class="container">
+  <!-- click this to create new elements -->
+  <div id="well" class="well"></div>
+</div>
+
+
+<style>
+  /* This parent for all  */
+
+  .container {
+    border: 1px solid #000;
+    /* Make this relative for absolute positioning children */
+    position: relative;
+    overflow: scroll;
+  }
+
+  .well {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.1);
+    left: 5px;
+    top: 5px;
+  }
+
+  .tile {
+    /* These will position absolute */
+    position: absolute;
+    width: 100px;
+    height: 80px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    /* border: 1px solid #000; */
+    z-index: 999;
+    background-color: rgba(100, 0, 0, 0.5);
+  }
+
+  .tile-1 {
+    background-image: url(bridgeEast.png)
+  }
+
+  .tile-2 {
+    background-image: url(bridgeNorth.png)
+  }
+
+  .tile-3 {
+    background-image: url(crossroad.png)
+  }
+
+  .tile-4 {
+    background-image: url(dirt.png)
+  }
+
+</style>
+
+
+
+<script>
+  // Get reference to DOM elements via ids
+  const well = getElement('well')
+  const container = getElement('container')
+
+  // Defines the currently selected draggable
+  let selected = null
+
+  // Define a mouse down event to handle pressing the well
+  well.onmousedown = function(e) {
+    // Make a new tile
+    const tile = makeTile()
+    // Make a new draggable that references the mouse at the mouse position
+    const draggable = new Draggable(tile, e.pageX, e.pageY)
+    // Mark this as selected
+    selected = draggable
+  }
+
+  // Define a mouse move on container
+  container.onmousemove = function(e) {
+    if (selected === null) return // Cancel this if nothing selected
+    // Drag the selected element
+    selected.drag(e.pageX, e.pageY)
+  }
+
+  // Listen for mouse up on the window
+  window.onmouseup = function(e) {
+    if (selected === null) return // if nothing is selected cancel this
+    // Snap the selected element
+    selected.snap()
+    // Set selected to null
+    selected = null
+  }
+
+  // Makes an Alien DOM element
+  function makeTile() {
+    // Create a new div element
+    const el = document.createElement('div')
+    // Add the alien class
+    el.classList.add('tile')
+    el.classList.add('tile-' + Math.ceil(Math.random() * 4))
+    // append the element to the DOM
+    container.appendChild(el)
+    // Return the element
+    return el
+  }
+
+  // A helper function to get elements by id
+  function getElement(id) {
+    return document.getElementById(id)
+  }
+
+  const TILE_WIDTH = 100
+  const TILE_HEIGHT = 50
+  const TILE_WIDTH_HALF = TILE_WIDTH / 2
+  const TILE_HEIGHT_HALF = TILE_HEIGHT / 2
+
+
+  // *****************************************
+
+  // Draggable class
+
+  // The Draggable class
+  function Draggable(el, x, y) {
+    this.isDragging = true
+    this.x = x // Has three properties
+    this.y = y
+    this.el = el // This is DOM element!
+  }
+
+  // Define some methods for the Draggable class
+
+  // Drag - moves the element to x and y
+  Draggable.prototype.drag = function(x, y) {
+    this.x = x
+    this.y = y
+    this.translate()
+  }
+
+  // Snap - rounds the position to the nearest 32px increment
+  Draggable.prototype.snap = function() {
+    // Convert screen coords to isometric grid units
+    const gridX = Math.round(0.5 * ( this.x / TILE_WIDTH_HALF + this.y / TILE_HEIGHT_HALF))
+    const gridY = Math.round(0.5 * (-this.x / TILE_WIDTH_HALF + this.y / TILE_HEIGHT_HALF))
+
+    // Convert Grid units to screen coords
+    screen_x = (gridX - gridY) * TILE_WIDTH_HALF
+    screen_y = (gridX + gridY) * TILE_HEIGHT_HALF
+
+    // Set the position of this tile
+    this.x = screen_x
+    this.y = screen_y
+
+    this.isDragging = false
+
+    // Move the tile on the screen.
+    this.translate()
+  }
+
+  // Translates - Sets translate with x and y to position element
+  Draggable.prototype.translate = function() {
+    // Set the offset to center the tile on the mouse
+    const offsetX = TILE_WIDTH / 2
+    const offsetY = TILE_HEIGHT / 2
+    // Set the CSS transform translate
+    this.el.style.transform = `translate3d(${this.x - offsetX}px, ${this.y - offsetY}px, 0)`
+    this.el.style.zIndex = this.isDragging ? 99999 : Math.floor(this.y)
+  }
+
+</script>

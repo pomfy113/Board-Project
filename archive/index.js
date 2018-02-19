@@ -35,60 +35,16 @@ hide.onclick = function(e){
 };
 
 // All manipulation functions
-// document.querySelectorAll('.ctrl-btn').forEach((button) =>{
-//     let action = button.id.split('-');
-//     button.onclick = function(e){
-//         if(grid){
-//             grid.manipulate(action[0], action[1], action[2]);
-//         }
-//     };
-
-document.querySelectorAll('button.inspector').forEach((button) =>{
-
+document.querySelectorAll('.ctrl-btn').forEach((button) =>{
+    let action = button.id.split('-');
     button.onclick = function(e){
-        // Should grab the classes of what we grab
-        let action = button.classList[1];
-        let values = [];
-
-        // Grab matching inputs
-        document.querySelectorAll("input." + action).forEach(function(data){
-            values.push(data.value);
-        });
-
         if(grid){
-            grid.manipulate('manual', action, values);
+            grid.manipulate(action[0], action[1]);
         }
-        // For changing the actual text
-        let text = "";
-        switch(action){
-            case "translate":
-                text = `X: ${values[0]}, Y: ${values[1]}`;
-                break;
-            case "rotate":
-                text = `X: ${values[0]}, Y: ${values[1]}, Z: ${values[2]}`;
-                break;
-        }
-        getElement("current-" + action).innerHTML = text;
-
     };
 
 
 });
-
-function rangeUpdateZoom(value){
-    if(grid){
-        grid.manipulate('manual', 'zoom', value);
-    }
-    getElement("current-zoom").innerHTML = value;
-}
-
-function rangeUpdateSpread(value){
-    console.log(value)
-    if(grid){
-        grid.manipulate('manual', 'spread', value);
-    }
-    getElement("current-spread").innerHTML = value;
-}
 
 // ==============
 // ==== Drag ====

@@ -34,42 +34,38 @@
     </div>
     <div id="right-ctrl" class="sidebar">
         <!-- Translates -->
-        <li>
-            <ul>Translate</ul>
-            <ul id="current-translate">X: 0, Y: 0</ul>
-            <ul>X: <input class="translate"></ul>
-            <ul>Y: <input class="translate"></ul>
-            <ul><button class="inspector translate">Translate</button></ul>
+        <div class="control">
+            <div class="row">
+                <div class="ctrl-btn translate" id="translate-up">&#x2191;</div>
+            </div>
 
-            <hr>
+            <div class="row">
+                <div class="ctrl-btn translate" id="translate-left">&#x2190;</div>
+                <div class="ctrl-btn translate" id="translate-right">&#x2192;</div>
+            </div>
 
-            <ul>Rotate</ul>
-            <ul id="current-rotate">X: 75, Y: 0, Z:-45</ul>
-            <ul>X: <input class="rotate"></ul>
-            <ul>Y: <input class="rotate"></ul>
-            <ul>Z: <input class="rotate"></ul>
-            <ul><button class="inspector rotate">Translate</button></ul>
-            <hr>
-
-            <ul>Zoom</ul>
-            <ul id="current-zoom">1</ul>
-            <ul>
-                <input class="zoom" oninput="rangeUpdateZoom(this.value)"
-                type="range" min="0" max="5" step="0.1">
-            </ul>
-            <!-- <ul><button class="inspector zoom">Zoom</button></ul> -->
-
-            <hr>
-
-            <ul>Spread</ul>
-            <ul id="current-spread">100</ul>
-            <ul>
-                <input oninput="rangeUpdateSpread(this.value)"
-                type="range" min="0" max="200">
-            </ul>
-
-
-        </li>
+            <div class="ctrl-btn translate" id="translate-down">&#x2193;</div>
+            </br>
+        </div>
+        <!-- Rotates -->
+        <div class="control">
+            <div class="ctrl-btn" id="rotate-down">Up</div>
+            <div class="row">
+                <div class="ctrl-btn" id="rotate-cw">&#x21BB;</div>
+                <div class="ctrl-btn" id="rotate-ccw">&#x21BA;</div>
+            </div>
+            <div class="ctrl-btn" id="rotate-up">Down</div>
+        </div>
+        <div class="control">
+            <div class="row nogap">
+                <div class="ctrl-btn" id="zoom-in">Zoom-in</div>
+                <div class="ctrl-btn" id="zoom-out">Zoom-out</div>
+            </div>
+            <div class="row nogap">
+                <div class="ctrl-btn" id="spread-in">Spread</div>
+                <div class="ctrl-btn" id="spread-out">Contract</div>
+            </div>
+        </div>
     </div>
   </div>
     <div id="hint">
@@ -82,5 +78,5 @@
 
 
 <!-- <script src="../home.js"></script> -->
-<script src="../gridprototype.js"></script>
-<script src="../indexprototype.js"></script>
+<script src="../grid.js"></script>
+<script src="../index.js"></script>

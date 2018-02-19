@@ -3,11 +3,15 @@ body{
     --inputColor: #EDE1D1;
     --gridColor: #f6f0e8dd;
     margin: 0px;
+    font-size: 16px;
 }
 
 body *{
+    font-family: Georgia;
     color: white;
     text-shadow: 0 0 3px black;
+    border: 0px;
+
 }
 
 button{
@@ -15,6 +19,15 @@ button{
     align-self: center;
     background-color: var(--inputColor);
     border: 1px solid grey;
+    font-size: 1em;
+    font-family: Georgia;
+    padding: 0.5em 1em;
+
+
+}
+
+input{
+    background-color: var(--inputColor);
 
 }
 
@@ -51,8 +64,6 @@ button.hidden{
 
     #generate-grid input{
         width: 50%;
-        background-color: var(--inputColor);
-        border: 0px;
     }
 
     #generate-grid *:focus{
@@ -67,8 +78,8 @@ button.hidden{
 
     #generate-grid button{
         margin: 10px;
-        width: 75%;
-        height: 15%;
+        /* width: 90%; */
+        /* height: 15%; */
 
     }
 /* ============================================== */
@@ -216,6 +227,19 @@ td .token{
 .sidebar {
     display: flex;
     margin: 5px;
+    list-style: none;
+    justify-content: center;
+}
+/* */
+#right-ctrl{
+    z-index: 5;
+    background-color: var(--genColor);
+    border: 1px solid grey;
+
+}
+
+#right-ctrl ul{
+    padding: 2px;
 }
 
 .control {
@@ -251,6 +275,13 @@ td .token{
         margin: 0px 2px;
     }
 
+li{
+    position: relative;
+    z-index: 1;
+}
+ul{
+    margin: 5px;
+}
 /* Hints */
 #hint{
     position: absolute;

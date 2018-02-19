@@ -135,7 +135,7 @@
                 let gridtoggle = function(target, button){
                     if(target.style.display === "none"){
                         target.style.display = "block";
-                        button.classList.remove("hidden")
+                        button.classList.remove("hidden");
 
                     }
                     else{
@@ -146,8 +146,11 @@
 // =========================================
 // Manipulations
 // =========================================
-    Grid.prototype.manipulate = function(type, direction){
+    Grid.prototype.manipulate = function(type, direction, amount){
         switch(type){
+            case "manual":
+                this.manual(direction, amount);
+                break;
             case "rotate":
                 this.rotateChange(direction);
                 break;
@@ -162,6 +165,41 @@
                 break;
             default:
                 console.log("Error");
+        }
+    };
+
+    Grid.prototype.manual = function(direction, amount){
+        switch(direction){
+            case "translate":
+                this.currentX = amount[0];
+                this.currentY = amount[1];
+                this.gridArray.forEach((grid) => {
+                    grid.style.setProperty("--x", this.currentX + "px");
+                    grid.style.setProperty("--y", this.currentX + "px");
+                });
+                break;
+            case "rotate":
+                this.rotX = amount[0];
+                this.rotY = amount[1];
+                this.rotZ = amount[2];
+                this.gridArray.forEach((grid) => {
+                    grid.style.setProperty("--rotX", this.rotX + "deg");
+                    grid.style.setProperty("--rotY", this.rotY + "deg");
+                    grid.style.setProperty("--rotZ", this.rotZ + "deg");
+                });
+                break;
+            case "zoom":
+                this.zoom = amount;
+                this.gridArray.forEach((grid) => {
+                    grid.style.setProperty("--zoom", this.zoom);
+                });
+                break;
+            case "spread":
+                this.layerHeight = amount;
+                this.gridArray.forEach((grid) => {
+                    grid.style.setProperty("--trnZ", (this.layerHeight * grid.getAttribute('level')) + "px");
+                });
+                break;
         }
     };
 
