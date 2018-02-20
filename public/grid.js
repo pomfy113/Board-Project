@@ -233,10 +233,14 @@
     Grid.prototype.rotateChange = function(direction){
         switch(direction){
             case "cw":
+                console.log(this.rotZ, typeof(this.rotZ))
                 this.rotZ -= 90;
+                console.log(this.rotZ, typeof(this.rotZ))
                 break;
             case "ccw":
+                console.log(this.rotZ, typeof(this.rotZ))
                 this.rotZ += 90;
+                console.log(this.rotZ, typeof(this.rotZ))
                 break;
             case "up":
                 this.rotX -= 15;

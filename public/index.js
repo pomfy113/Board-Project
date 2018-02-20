@@ -42,7 +42,7 @@ document.querySelectorAll('button.inspector').forEach((button) => {
 
         // Grab matching inputs
         document.querySelectorAll("input." + action).forEach(function(data){
-            values.push(data.value);
+            values.push(Number(data.value));
         });
 
         if(grid){
