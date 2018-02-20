@@ -48,24 +48,23 @@ document.querySelectorAll('button.inspector').forEach((button) => {
         if(grid){
             grid.manipulate('manual', action, values);
         }
-
         // For changing the actual text
-        let text = "";
-        switch(action){
-            case "translate":
-                text = `X: ${values[0]}, Y: ${values[1]}`;
-                break;
-            case "rotate":
-                text = `X: ${values[0]}, Y: ${values[1]}, Z: ${values[2]}`;
-                break;
-        }
-        getElement("current-" + action).innerHTML = text;
+        movementUpdate(action);
     };
 
 
 });
 
+function movementUpdate(action){
+    // Update the inner text
+    if(grid){
+        getElement("current-translate").innerHTML = `X: ${grid.currentX}, Y: ${grid.currentY}`;
+        getElement("current-rotate").innerHTML = `X: ${grid.rotX}, Y: ${grid.rotY}, Z: ${grid.rotZ}`;
+    }
+}
+
 function rangeUpdateZoom(value){
+    // Update the zoom range value
     if(grid){
         grid.manipulate('manual', 'zoom', value);
     }
@@ -73,6 +72,7 @@ function rangeUpdateZoom(value){
 }
 
 function rangeUpdateSpread(value){
+    // Update the spread range value
     if(grid){
         grid.manipulate('manual', 'spread', value);
     }
@@ -159,8 +159,8 @@ document.body.onkeydown = function(e){
             case "c":
                 grid.manipulate("zoom", "out");
                 break;
-
         }
+        movementUpdate()
     }
 
 };

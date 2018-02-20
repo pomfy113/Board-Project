@@ -164,7 +164,7 @@
                 this.spreadChange(direction);
                 break;
             default:
-                console.log("Error");
+                console.log("Error - action not found");
         }
     };
 
