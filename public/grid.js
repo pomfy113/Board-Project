@@ -9,9 +9,8 @@
         this.gridArray = [];                    // All of the grids; can be single if height is only 1
         this.container = container;             // Where are we putting the grid?
         this.visibility = visibility;           // Where to put button visibilities
-        // And so we begin
+        // Begin actual creation
         this.create();
-        // Manipulations
     }
 
     // Full creation of grid
@@ -48,6 +47,7 @@
                     this.visibility.removeChild(this.visibility.firstChild);
                 }
             }
+
             this.rows = rows;
             this.cols = cols;
             this.height = height;
@@ -233,14 +233,10 @@
     Grid.prototype.rotateChange = function(direction){
         switch(direction){
             case "cw":
-                console.log(this.rotZ, typeof(this.rotZ))
                 this.rotZ -= 90;
-                console.log(this.rotZ, typeof(this.rotZ))
                 break;
             case "ccw":
-                console.log(this.rotZ, typeof(this.rotZ))
                 this.rotZ += 90;
-                console.log(this.rotZ, typeof(this.rotZ))
                 break;
             case "up":
                 this.rotX -= 15;

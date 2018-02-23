@@ -10,7 +10,8 @@ let generate = getElement('generate');
 // For hiding
 let hide = getElement('hide');
 let generators = getElement('generators');
-
+// inspector
+let inspector = getElement('inspector');
 
 generate.onclick = function(e){
     height = getElement('height').value;
@@ -22,6 +23,7 @@ generate.onclick = function(e){
     else{
         grid.resetAll(rows, cols, height);
     }
+    inspector.style.display = "block";
 
 };
 
@@ -90,13 +92,15 @@ function drag(ev) {
     ev.dataTransfer.setData("token", ev.target.id);
 }
 
+let cubeNum = 1;
+
 function drop(ev) {
     ev.preventDefault();
-    let cubeNum = 1;
     let data = ev.dataTransfer.getData("token");
     let dataObj = document.getElementById(data);
 
     if(ev.target.nodeName === 'TD'){
+        // If it's a generator, we make a copy of an object
         if(dataObj.classList.contains("generator")){
                 dataCopy = dataObj.cloneNode(true);
                 dataCopy.id = "cube" + cubeNum;
@@ -104,13 +108,12 @@ function drop(ev) {
                 cubeNum += 1;
                 ev.target.appendChild(dataCopy);
         }
+        // Else, just move said object around
         // I might wanna be careful to be more specific on what I drop around
         else{
             ev.target.appendChild(dataObj);
         }
     }
-
-
 }
 
 // ================
@@ -119,18 +122,18 @@ function drop(ev) {
 document.body.onkeydown = function(e){
     if(grid){
         switch(e.key){
-            // Translates
+            // Translates; inverted to act similar to camera
             case "ArrowLeft":
-                grid.manipulate("translate", "left");
-                break;
-            case "ArrowRight":
                 grid.manipulate("translate", "right");
                 break;
+            case "ArrowRight":
+                grid.manipulate("translate", "left");
+                break;
             case "ArrowUp":
-                grid.manipulate("translate", "up");
+                grid.manipulate("translate", "down");
                 break;
             case "ArrowDown":
-                grid.manipulate("translate", "down");
+                grid.manipulate("translate", "up");
                 break;
             // Rotates
             case "w":
@@ -160,7 +163,7 @@ document.body.onkeydown = function(e){
                 grid.manipulate("zoom", "out");
                 break;
         }
-        movementUpdate()
+        movementUpdate();
     }
 
 };
