@@ -210,6 +210,10 @@ td .token{
     color: red;
 }
 
+.grid td:hover{
+    background-color: yellow;
+}
+
 /* Controls */
 #controls{
     position: absolute;
