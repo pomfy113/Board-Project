@@ -1,4 +1,5 @@
-# (Placeholder Name)
+# 3d20
+## Status - In Hiatus, but not forgotten!
 The current idea in progress is a 3-dimensional board that people can use for various tabletop games. I took my inspiration from old-school isometric tactical games, such as X-com and Final Fantasy Tactics.
 
 The end product will hopefully allow people to have a more immersive experience with tier tabletop games, whatever it may be!
@@ -23,11 +24,11 @@ Vanilla Javascript and CSS! No libraries.
      * [X] Able to create different height (true 3D)
      * [X] Object generator rather than creating THEN dragging
      * [X] Basic adjusting of where the grid is (center it)
-     * [ ] Need a cleaner way of doing this **(IN PROGRESS)**
+     * [X] Need a cleaner way of doing this
 4. [X] Basic clean-up
      * [X] Improve and clean-up basic javascript
-5. [ ] Tokens
-     * [ ] Create tokens
+5. [X] Tokens
+     * [X] Create tokens
      * [ ] Able to upload images for tokens
      * [ ] Multi-face tokens?
 6. [ ] Socket
