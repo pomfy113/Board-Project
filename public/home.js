@@ -298,40 +298,6 @@ function gridtoggle(target, button){
     }
 }
 
-// ==============
-// ==== Drag ====
-// ==============
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("token", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-
-    let data = ev.dataTransfer.getData("token");
-    let dataObj = document.getElementById(data);
-
-    if(ev.target.nodeName === 'TD'){
-        if(dataObj.classList.contains("generator")){
-                dataCopy = dataObj.cloneNode(true);
-                dataCopy.id = "cube" + cubeNum;
-                dataCopy.classList.remove("generator");
-                cubeNum += 1;
-                ev.target.appendChild(dataCopy);
-        }
-        // I might wanna be careful to be more specific on what I drop around
-        else{
-            ev.target.appendChild(dataObj);
-        }
-    }
-
-
-}
-
 // ===============
 // == Generator ==
 // ===============

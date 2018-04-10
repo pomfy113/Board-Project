@@ -13,6 +13,7 @@ let generators = getElement('generators');
 // inspector
 let inspector = getElement('inspector');
 
+
 generate.onclick = function(e){
     height = getElement('height').value;
     rows = getElement('row').value;

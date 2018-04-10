@@ -151,10 +151,19 @@ td .token{
       border-radius: 50%;
     }
 
-    /* Backright */
-    .token .face:nth-child(2) {
+    /* RDM Backright */
+    .token.rdm .face:nth-child(2) {
       transform: rotateX(-90deg) rotateY(var(--rotZ ));
-      background-image: url('token.jpg');
+      background-image: url('token.png');
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      transition: 500ms;
+    }
+
+    /* Orc Backright */
+    .token.orc .face:nth-child(2) {
+      transform: rotateX(-90deg) rotateY(var(--rotZ ));
+      background-image: url('orc.png');
       background-size: auto 100%;
       background-repeat: no-repeat;
       transition: 500ms;
