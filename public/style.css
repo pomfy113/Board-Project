@@ -28,7 +28,8 @@ button{
 
 input{
     background-color: var(--inputColor);
-
+    padding: 5px;
+    border-radius: 5px;
 }
 
 button.hidden{
@@ -235,6 +236,10 @@ td .token{
 #grid-visibility{
     display: flex;
     flex-direction: column;
+}
+
+#grid-visibility button{
+    margin: 2.5px;
 }
 
 .sidebar {
