@@ -115,6 +115,10 @@ function drop(ev) {
             ev.target.appendChild(dataObj);
         }
     }
+    else if(ev.target.nodeName === 'DIV' && !dataObj.classList.contains("generator")){
+        // Remove if we move it outside
+        dataObj.remove()
+    }
 }
 
 // ================
