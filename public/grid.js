@@ -175,7 +175,7 @@
                 this.currentY = amount[1];
                 this.gridArray.forEach((grid) => {
                     grid.style.setProperty("--x", this.currentX + "px");
-                    grid.style.setProperty("--y", this.currentX + "px");
+                    grid.style.setProperty("--y", this.currentY + "px");
                 });
                 break;
             case "rotate":
