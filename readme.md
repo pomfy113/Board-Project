@@ -1,4 +1,5 @@
 # 3d20
+![Short demo image](./Board-Demo.gif)
 ## Status - In Hiatus, but not forgotten!
 https://board-3d20.herokuapp.com/
 
